@@ -1,6 +1,10 @@
 package com.example.writerchainapp.Constructors;
 
 
+import com.example.writerchainapp.data.model.Chapters;
+
+import java.util.List;
+
 public class Chain {
 
     private String chainName;
@@ -9,10 +13,12 @@ public class Chain {
     private String chainDescription;
     private String dateCreated;
     private String chainGenre;
-    private String chapterCount;
+    private int chapterCount;
+    private List<Chapters> chaptersList;
     private String chainUpvotes;
 
-    public Chain(String chainName, String chainID, String chainAuthor, String chainDescription, String chainGenre, String chapterCount, String chainUpvotes) {
+    public Chain(String chainName, String chainID, String chainAuthor, String chainDescription,
+                 String chainGenre, int chapterCount, String chainUpvotes, List<Chapters> chapters) {
         this.chainName = chainName;
         this.chainID = chainID;
         this.chainAuthor = chainAuthor;
@@ -20,10 +26,19 @@ public class Chain {
         this.chainGenre = chainGenre;
         this.chapterCount = chapterCount;
         this.chainUpvotes = chainUpvotes;
+        this.chaptersList = chapters;
     }
 
     public Chain() {
 
+    }
+
+    public List<Chapters> getChaptersList() {
+        return chaptersList;
+    }
+
+    public void setChaptersList(List<Chapters> chaptersList) {
+        this.chaptersList = chaptersList;
     }
 
     public String getChainName() {
@@ -74,11 +89,11 @@ public class Chain {
         this.chainGenre = chainGenre;
     }
 
-    public String getChapterCount() {
+    public int getChapterCount() {
         return chapterCount;
     }
 
-    public void setChapterCount(String chapterCount) {
+    public void setChapterCount(int chapterCount) {
         this.chapterCount = chapterCount;
     }
 
