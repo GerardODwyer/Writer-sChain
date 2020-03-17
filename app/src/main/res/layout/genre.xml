@@ -9,95 +9,94 @@
     android:background="@drawable/background">
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/image_comedy"
         android:layout_width="125dp"
         android:layout_height="125dp"
-        app:srcCompat="@drawable/comedy"
-        tools:layout_editor_absoluteX="10dp"
-        tools:layout_editor_absoluteY="164dp" />
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_header"
+        app:srcCompat="@drawable/comedy" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/image_horror"
         android:layout_width="125dp"
         android:layout_height="125dp"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="160dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintStart_toEndOf="@id/image_comedy"
+        app:layout_constraintTop_toTopOf="@id/image_comedy"
         app:srcCompat="@drawable/horror" />
 
     <ImageView
-        android:id="@+id/imageView9"
+        android:id="@+id/image_medieval"
         android:layout_width="125dp"
         android:layout_height="125dp"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="360dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+       android:layout_marginLeft="16dp"
+        app:layout_constraintStart_toEndOf="@id/image_scifi"
+        app:layout_constraintTop_toTopOf="@id/image_scifi"
         app:srcCompat="@drawable/medieval" />
 
     <ImageView
-        android:id="@+id/imageView10"
+        android:id="@+id/image_love"
         android:layout_width="125dp"
         android:layout_height="125dp"
-        android:layout_marginStart="288dp"
-        android:layout_marginTop="164dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/image_horror"
+        app:layout_constraintTop_toTopOf="@id/image_horror"
         app:srcCompat="@drawable/romance" />
 
     <ImageView
-        android:id="@+id/imageView11"
+        android:id="@+id/image_scifi"
         android:layout_width="125dp"
         android:layout_height="125dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="360dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_comedy"
         app:srcCompat="@drawable/scifi" />
 
     <ImageView
-        android:id="@+id/imageView12"
+        android:id="@+id/image_tragedy"
         android:layout_width="125dp"
         android:layout_height="125dp"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="530dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@id/image_mystery"
+        app:layout_constraintTop_toTopOf="@id/image_mystery"
         app:srcCompat="@drawable/tragedy" />
 
     <ImageView
-        android:id="@+id/imageView13"
+        android:id="@+id/image_mystery"
         android:layout_width="125dp"
         android:layout_height="125dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="530dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_scifi"
         app:srcCompat="@drawable/unknown" />
 
     <ImageView
-        android:id="@+id/imageView14"
+        android:id="@+id/image_western"
         android:layout_width="125dp"
         android:layout_height="125dp"
-        android:layout_marginStart="288dp"
-        android:layout_marginTop="528dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/image_tragedy"
+        app:layout_constraintTop_toTopOf="@id/image_tragedy"
         app:srcCompat="@drawable/western" />
 
     <ImageView
-        android:id="@+id/imageView16"
+        android:id="@+id/image_ci"
         android:layout_width="125dp"
         android:layout_height="125dp"
-        android:layout_marginStart="284dp"
-        android:layout_marginTop="360dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/image_medieval"
+        app:layout_constraintTop_toTopOf="@id/image_medieval"
         app:srcCompat="@drawable/ci" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/image_header"
         android:layout_width="wrap_content"
         android:layout_height="135dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -107,74 +106,102 @@
         app:srcCompat="@drawable/banner" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="87dp"
-        android:layout_height="35dp"
+        android:id="@+id/text_comedy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Comedy"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/image_comedy"
+        app:layout_constraintStart_toStartOf="@+id/image_comedy"
+        app:layout_constraintTop_toBottomOf="@id/image_comedy" />
+
+    <TextView
+        android:id="@+id/text_horror"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Horror"
-        tools:layout_editor_absoluteX="38dp"
-        tools:layout_editor_absoluteY="304dp" />
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/image_horror"
+        app:layout_constraintStart_toStartOf="@+id/image_horror"
+        app:layout_constraintTop_toBottomOf="@+id/image_horror" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/text_love"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="178dp"
-        tools:layout_editor_absoluteY="304dp" />
+        android:text="Love"
+        android:textSize="20sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/image_love"
+        app:layout_constraintStart_toStartOf="@+id/image_love"
+        app:layout_constraintTop_toBottomOf="@+id/image_love" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/text_scifi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="323dp"
-        tools:layout_editor_absoluteY="302dp" />
+        android:text="SciFi"
+        android:layout_marginTop="16dp"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/image_scifi"
+        app:layout_constraintEnd_toEndOf="@+id/image_scifi"
+        app:layout_constraintStart_toStartOf="@+id/image_scifi"
+        />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/text_medevil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="36dp"
-        tools:layout_editor_absoluteY="494dp" />
+        android:text="Medevil"
+        android:textSize="20sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/image_medieval"
+        app:layout_constraintStart_toStartOf="@+id/image_medieval"
+        app:layout_constraintTop_toBottomOf="@+id/image_medieval" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/text_ci"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="169dp"
-        tools:layout_editor_absoluteY="494dp" />
+        android:text="Crime"
+        android:textSize="20sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/image_ci"
+        app:layout_constraintTop_toBottomOf="@+id/image_ci" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/text_mystery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="314dp"
-        tools:layout_editor_absoluteY="492dp" />
+        android:text="Mystery"
+        android:textSize="20sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/image_mystery"
+        app:layout_constraintStart_toStartOf="@+id/image_mystery"
+        app:layout_constraintTop_toBottomOf="@+id/image_mystery" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/text_tradgey"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="38dp"
-        tools:layout_editor_absoluteY="668dp" />
+        android:text="tradgey"
+        android:textSize="20sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/image_tragedy"
+        app:layout_constraintStart_toStartOf="@+id/image_tragedy"
+        app:layout_constraintTop_toBottomOf="@+id/image_tragedy" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/text_western"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="174dp"
-        tools:layout_editor_absoluteY="674dp" />
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="318dp"
-        tools:layout_editor_absoluteY="670dp" />
+        android:text="Western"
+        android:textSize="20sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/image_western"
+        app:layout_constraintStart_toStartOf="@+id/image_western"
+        app:layout_constraintTop_toBottomOf="@+id/image_western" />
 </androidx.constraintlayout.widget.ConstraintLayout>
