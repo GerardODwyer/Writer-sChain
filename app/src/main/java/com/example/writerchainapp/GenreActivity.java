@@ -1,5 +1,6 @@
 package com.example.writerchainapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ public class GenreActivity extends AppCompatActivity {
     private ImageView imageMystery;
     private ImageView imageTradgey;
     private ImageView imageWestren;
+    Intent intent;
 
 
     @Override
@@ -26,10 +28,12 @@ public class GenreActivity extends AppCompatActivity {
         setupVariables();
 
 
+
         imageComdey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GenreActivity.this, "Comdey Clicked", Toast.LENGTH_SHORT).show();
+                intent = new Intent(GenreActivity.this, ComedyActivity.class);
+                startActivity(intent);
             }
         });
 
