@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
 public class GenreActivity extends AppCompatActivity {
     private ImageView imageComdey;
     private ImageView imageHorror;
@@ -40,7 +41,8 @@ public class GenreActivity extends AppCompatActivity {
         imageHorror.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GenreActivity.this, "Horror Clicked", Toast.LENGTH_SHORT).show();
+               // intent = new Intent(GenreActivity.this, HorrorActivity.class);
+                startActivity(intent);
             }
         });
 

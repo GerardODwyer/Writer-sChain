@@ -15,9 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ComdeyAdapter  extends RecyclerView.Adapter<ComdeyAdapter.ViewHolder> {
-    private List<Chain> chainsList;
+    List<Chain> chainsList;
     LayoutInflater layoutInflater;
     ChainAdapter.ItemClickListener mClickListener;
+    private Context context;
 
     // data is passed into the constructor
     public ComdeyAdapter(Context context, List<Chain> chainsList) {
@@ -31,22 +32,21 @@ public class ComdeyAdapter  extends RecyclerView.Adapter<ComdeyAdapter.ViewHolde
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.chainsrecyclerview_rows, parent, false);
 
-        return new ComdeyAdapter.ViewHolder(itemView);
+        return new ViewHolder(context, itemView);
     }
 
 
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ComdeyAdapter.ViewHolder holder, int position) {
-        chainsList = new ArrayList<>();
         Chain chain = chainsList.get(position);
-        //holder.text_ChainID.setText(chain.getChainID());
+        holder.text_ChainID.setText(chain.getChainID());
         holder.text_ChainTitle.setText(chain.getChainName());
-//        holder.text_ChainAuthor.setText(chain.getChainAuthor());
-//        holder.text_ChainDesc.setText(chain.getChainDescription());
-//        holder.text_ChainDate.setText(chain.getDateCreated());
-//        holder.text_ChainGenre.setText(chain.getChainGenre());
-        holder.text_ChainChapterCount.setText(chain.getChapterCount());
+        holder.text_ChainAuthor.setText(chain.getChainAuthor());
+        holder.text_ChainDesc.setText(chain.getChainDescription());
+        holder.text_ChainDate.setText(chain.getDateCreated());
+        holder.text_ChainGenre.setText(chain.getChainGenre());
+        //holder.text_ChainChapterCount.setText(chain.getChapterCount());
         //holder.text_ChainUpvotes.setText(chain.getChainUpvotes());
 
 
@@ -71,15 +71,16 @@ public class ComdeyAdapter  extends RecyclerView.Adapter<ComdeyAdapter.ViewHolde
         TextView text_ChainUpvotes;
 
 
-        ViewHolder(View itemView) {
+        ViewHolder(Context ctx,View itemView) {
             super(itemView);
-//            text_ChainID = itemView.findViewById(R.id.chainID);
+            context = ctx;
+            text_ChainID = itemView.findViewById(R.id.chainID);
             text_ChainTitle = itemView.findViewById(R.id.chain_title);
-//            text_ChainAuthor = itemView.findViewById(R.id.chain_author);
-//            text_ChainDesc = itemView.findViewById(R.id.chain_desc);
-//            text_ChainDate = itemView.findViewById(R.id.chain_datecreated);
-//            text_ChainGenre = itemView.findViewById(R.id.chain_genre);
-            text_ChainChapterCount = itemView.findViewById(R.id.chain_chaptercount);
+            text_ChainAuthor = itemView.findViewById(R.id.chain_author);
+            text_ChainDesc = itemView.findViewById(R.id.chain_desc);
+            text_ChainDate = itemView.findViewById(R.id.chain_datecreated);
+            text_ChainGenre = itemView.findViewById(R.id.chain_genre);
+           // text_ChainChapterCount = itemView.findViewById(R.id.chain_chaptercount);
             //text_ChainUpvotes = itemView.findViewById(R.id.chain_upvotes);
 
             itemView.setOnClickListener(this);

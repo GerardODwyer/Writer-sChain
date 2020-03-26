@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.writerchainapp.Constructors.Chain;
 import com.example.writerchainapp.R;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class ChainAdapter extends RecyclerView.Adapter<ChainAdapter.ViewHolder> {
@@ -39,14 +39,14 @@ public class ChainAdapter extends RecyclerView.Adapter<ChainAdapter.ViewHolder> 
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        chainsList = new ArrayList<>();
+
         Chain chain = chainsList.get(position);
-//        holder.text_ChainID.setText(chain.getChainID());
+        holder.text_ChainID.setText(chain.getChainID());
         holder.text_ChainTitle.setText(chain.getChainName());
-//        holder.text_ChainAuthor.setText(chain.getChainAuthor());
-//        holder.text_ChainDesc.setText(chain.getChainDescription());
-//        holder.text_ChainDate.setText(chain.getDateCreated());
-//        holder.text_ChainGenre.setText(chain.getChainGenre());
+        holder.text_ChainAuthor.setText(chain.getChainAuthor());
+        holder.text_ChainDesc.setText(chain.getChainDescription());
+        holder.text_ChainDate.setText(chain.getDateCreated());
+        holder.text_ChainGenre.setText(chain.getChainGenre());
 //        holder.text_ChainChapterCount.setText(chain.getChapterCount());
 //        holder.text_ChainUpvotes.setText(chain.getChainUpvotes());
 
@@ -80,8 +80,8 @@ public class ChainAdapter extends RecyclerView.Adapter<ChainAdapter.ViewHolder> 
             text_ChainDesc = itemView.findViewById(R.id.chain_desc);
             text_ChainDate = itemView.findViewById(R.id.chain_datecreated);
             text_ChainGenre = itemView.findViewById(R.id.chain_genre);
-            text_ChainChapterCount = itemView.findViewById(R.id.chain_chaptercount);
-            text_ChainUpvotes = itemView.findViewById(R.id.chain_upvotes);
+//            text_ChainChapterCount = itemView.findViewById(R.id.chain_chaptercount);
+//            text_ChainUpvotes = itemView.findViewById(R.id.chain_upvotes);
 
             itemView.setOnClickListener(this);
         }

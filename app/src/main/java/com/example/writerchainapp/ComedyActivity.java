@@ -17,8 +17,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.writerchainapp.Adapters.ChainAdapter;
+import com.example.writerchainapp.Adapters.ComdeyAdapter;
 import com.example.writerchainapp.Constructors.Chain;
 import com.example.writerchainapp.data.model.Chapters;
+import com.example.writerchainapp.utils.Utils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,6 +35,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class ComedyActivity extends AppCompatActivity implements ChainAdapter.ItemClickListener {
 
@@ -44,7 +47,7 @@ public class ComedyActivity extends AppCompatActivity implements ChainAdapter.It
     private FirebaseAuth auth;
     private Chain chain;
     private FloatingActionButton fab;
-    private ChainAdapter chainAdapter;
+    private ComdeyAdapter chainAdapter;
     private RecyclerView recyclerView;
 
 
@@ -56,84 +59,28 @@ public class ComedyActivity extends AppCompatActivity implements ChainAdapter.It
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
+        chain = new Chain();
         dbReference = database.getReference().child(user.getUid()).child("Chain");
         chainsList = new ArrayList<>();
         //chainsList.clear();
         recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        chainsList = loadChains();
-
-
-        chainAdapter = new ChainAdapter(this, chainsList);
-        chainAdapter.setClickListener(this);
-        recyclerView.setAdapter(chainAdapter);
-        chainAdapter.notifyDataSetChanged();
-
-
-
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createDialog(getApplicationContext());
-
-
-            }
-        });
-
-    }
-
-    //@Override
-    public void onItemClick(View view, int position) {
-        Toast.makeText(this, "You clicked " + chainAdapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
-    }
-
-    public void createDialog(Context context){
-        final AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();
-        LayoutInflater inflater = this.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_layout, null);
-
-        final EditText editText = dialogView.findViewById(R.id.edt_comment);
-        Button button1 = dialogView.findViewById(R.id.buttonSubmit);
-
-
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               String Title = editText.getText().toString();
-               chain.setChainName(Title);
-               saveDataToFirebase(chain);
-                dialogBuilder.dismiss();
-            }
-        });
-
-        dialogBuilder.setView(dialogView);
-        dialogBuilder.show();
-    }
-
-    public void saveDataToFirebase(Chain chain){
-        DatabaseReference newDb = dbReference.push();
-        Map<String, String> saveData = new HashMap<>();
-        saveData.put("chainId", chain.getChainID());
-        saveData.put("chainAuthor", chain.getChainAuthor());
-        saveData.put("chainDesc", chain.getChainDescription());
-        saveData.put("chainGenre", chain.getChainGenre());
-        saveData.put("chainName", chain.getChainName());
-        saveData.put("chainUpvote", chain.getChainUpvotes());
-        saveData.put("chainChapterCount", String.valueOf(chain.getChapterCount()));
-        newDb.getRef().child("").setValue(saveData);
-    }
-
-    private List<Chain> loadChains() {
-        chain = new Chain();
         dbReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
                 chain = dataSnapshot.getValue(Chain.class);
                 chainsList.add(chain);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+
+
+
+                chainAdapter = new ComdeyAdapter(getApplicationContext(), chainsList);
+               // chainAdapter.setClickListener(ChainAdapter.ItemClickListener.this);
+                recyclerView.setAdapter(chainAdapter);
+                chainAdapter.notifyDataSetChanged();
+
 
 //                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
 //                recyclerView.setLayoutManager(mLayoutManager);
@@ -162,6 +109,81 @@ public class ComedyActivity extends AppCompatActivity implements ChainAdapter.It
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+
+
+
+
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createDialog(getApplicationContext());
+
+
+            }
+        });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+    }
+
+    //@Override
+    public void onItemClick(View view, int position) {
+        Toast.makeText(this, "You clicked " + chainAdapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+    }
+
+    public void createDialog(Context context){
+        final AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_layout, null);
+
+        final EditText title = dialogView.findViewById(R.id.edt_title);
+        final EditText author = dialogView.findViewById(R.id.edt_author);
+        final EditText desc = dialogView.findViewById(R.id.edt_desc);
+        final EditText dateCreated = dialogView.findViewById(R.id.edt_date_created);
+        final EditText genre = dialogView.findViewById(R.id.edt_genre);
+        Button button1 = dialogView.findViewById(R.id.buttonSubmit);
+
+
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               String titleName = title.getText().toString();
+               String authorName = author.getText().toString();
+               String description = desc.getText().toString();
+               String date = dateCreated.getText().toString();
+               String genreName = genre.getText().toString();
+
+               chain.setChainName(titleName);
+               chain.setChainAuthor(authorName);
+               chain.setChainDescription(description);
+               chain.setDateCreated(date);
+               chain.setChainGenre(genreName);
+               Utils.saveDataToFirebase(chain, dbReference);
+                dialogBuilder.dismiss();
+            }
+        });
+
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.show();
+    }
+
+
+
+    public List<Chain> loadChains() {
+        chain = new Chain();
         return chainsList;
     }
 
