@@ -3,19 +3,15 @@ package com.example.writerchainapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.writerchainapp.Adapters.ChainAdapter;
+import com.example.writerchainapp.recyclerviewsadapter.ChainAdapter;
 import com.example.writerchainapp.Constructors.Chain;
+import com.example.writerchainapp.recyclerviewsadapter.ChainAdapter.OnChainlistener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,7 +22,7 @@ import com.google.firebase.database.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChainRecyclerView extends AppCompatActivity implements ChainAdapter.ItemClickListener {
+public class ChainRecyclerView extends AppCompatActivity implements OnChainlistener {
 
     private List<Chain> chainsList = new ArrayList<>();
     ChainAdapter chainAdapter;
@@ -36,6 +32,7 @@ public class ChainRecyclerView extends AppCompatActivity implements ChainAdapter
 
     private FirebaseDatabase firebaseDb;
     private DatabaseReference databaseRef;
+    private OnChainlistener recyclerClickListener;
 
 
 
@@ -55,8 +52,7 @@ public class ChainRecyclerView extends AppCompatActivity implements ChainAdapter
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        chainAdapter = new ChainAdapter(this, chainsList);
-        chainAdapter.setClickListener(this);
+        chainAdapter = new ChainAdapter(this, chainsList, this);
         recyclerView.setAdapter(chainAdapter);
 
 
@@ -64,11 +60,10 @@ public class ChainRecyclerView extends AppCompatActivity implements ChainAdapter
 
     }
 
-    //@Override
-    public void onItemClick(View view, int position) {
-        Toast.makeText(this, "You clicked " + chainAdapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+    @Override
+    public void onChainClick(final int position) {
+        Toast.makeText(getApplicationContext(), "Position is " + chainsList.get(position), Toast.LENGTH_SHORT).show();
     }
-
 
 
     private List<Chain> loadChains() {

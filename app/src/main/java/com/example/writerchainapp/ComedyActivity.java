@@ -1,14 +1,12 @@
 package com.example.writerchainapp;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,39 +14,35 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.writerchainapp.Adapters.ChainAdapter;
-import com.example.writerchainapp.Adapters.ComdeyAdapter;
+import com.example.writerchainapp.recyclerviewsadapter.ChainAdapter;
 import com.example.writerchainapp.Constructors.Chain;
 import com.example.writerchainapp.data.model.Chapters;
+import com.example.writerchainapp.recyclerviewsadapter.ChainAdapter.OnChainlistener;
+
 import com.example.writerchainapp.utils.Utils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.annotations.Nullable;
+
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
-public class ComedyActivity extends AppCompatActivity implements ChainAdapter.ItemClickListener {
+public class ComedyActivity extends AppCompatActivity implements OnChainlistener {
 
     private FirebaseDatabase database;
     private DatabaseReference dbReference;
-    private List<Chain> chainsList;
+    private List<Chain> comdeyList;
     private List<Chapters> chapters = new ArrayList<>();
     private FirebaseUser user;
     private FirebaseAuth auth;
     private Chain chain;
     private FloatingActionButton fab;
-    private ComdeyAdapter chainAdapter;
+    private ChainAdapter chainAdapter;
     private RecyclerView recyclerView;
+
 
 
     @Override
@@ -56,63 +50,14 @@ public class ComedyActivity extends AppCompatActivity implements ChainAdapter.It
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comedy);
         fab = findViewById(R.id.floatingActionButton);
+        recyclerView = findViewById(R.id.recycler_view);
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-        chain = new Chain();
         dbReference = database.getReference().child(user.getUid()).child("Chain");
-        chainsList = new ArrayList<>();
-        //chainsList.clear();
-        recyclerView = findViewById(R.id.recycler_view);
-        dbReference.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                chain = dataSnapshot.getValue(Chain.class);
-                chainsList.add(chain);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-
-
-
-
-                chainAdapter = new ComdeyAdapter(getApplicationContext(), chainsList);
-               // chainAdapter.setClickListener(ChainAdapter.ItemClickListener.this);
-                recyclerView.setAdapter(chainAdapter);
-                chainAdapter.notifyDataSetChanged();
-
-
-//                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-//                recyclerView.setLayoutManager(mLayoutManager);
-//                recyclerView.setItemAnimator(new DefaultItemAnimator());
-//                recyclerView.setAdapter(chainAdapter);
-
-
-//                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
-//                        mLayoutManager.getOrientation());
-//                recyclerView.addItemDecoration(dividerItemDecoration);
-
-
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            }
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-            }
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-
-
-
-
+        chain = new Chain();
+        comdeyList = new ArrayList<>();
+        comdeyList = (List<Chain>) getIntent().getExtras().getSerializable(Chain.COMDEY);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,13 +80,12 @@ public class ComedyActivity extends AppCompatActivity implements ChainAdapter.It
     @Override
     protected void onResume() {
         super.onResume();
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        chainAdapter = new ChainAdapter(getApplicationContext(), comdeyList, this);
+        recyclerView.setAdapter(chainAdapter);
+        chainAdapter.notifyDataSetChanged();
 
-
-    }
-
-    //@Override
-    public void onItemClick(View view, int position) {
-        Toast.makeText(this, "You clicked " + chainAdapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
     }
 
     public void createDialog(Context context){
@@ -160,19 +104,20 @@ public class ComedyActivity extends AppCompatActivity implements ChainAdapter.It
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               String titleName = title.getText().toString();
-               String authorName = author.getText().toString();
-               String description = desc.getText().toString();
-               String date = dateCreated.getText().toString();
-               String genreName = genre.getText().toString();
+                String titleName = title.getText().toString();
+                String authorName = author.getText().toString();
+                String description = desc.getText().toString();
+                String date = dateCreated.getText().toString();
+                String genreName = genre.getText().toString();
 
-               chain.setChainName(titleName);
-               chain.setChainAuthor(authorName);
-               chain.setChainDescription(description);
-               chain.setDateCreated(date);
-               chain.setChainGenre(genreName);
-               Utils.saveDataToFirebase(chain, dbReference);
+                chain.setChainName(titleName);
+                chain.setChainAuthor(authorName);
+                chain.setChainDescription(description);
+                chain.setDateCreated(date);
+                chain.setChainGenre(genreName);
+                Utils.saveDataToFirebase(chain, dbReference);
                 dialogBuilder.dismiss();
+                onBackPressed();
             }
         });
 
@@ -182,11 +127,8 @@ public class ComedyActivity extends AppCompatActivity implements ChainAdapter.It
 
 
 
-    public List<Chain> loadChains() {
-        chain = new Chain();
-        return chainsList;
+    @Override
+    public void onChainClick(final int position) {
+        Toast.makeText(getApplicationContext(), "Position is " + comdeyList.get(position).getChainID(), Toast.LENGTH_SHORT).show();
     }
-
-
-
 }

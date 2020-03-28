@@ -3,10 +3,19 @@ package com.example.writerchainapp.Constructors;
 
 import com.example.writerchainapp.data.model.Chapters;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Chain {
-
+public class Chain implements Serializable {
+    public static final String COMDEY = "COMDEY";
+    public static final String HORROR = "HORROR";
+    public static final String LOVE = "LOVE";
+    public static final String SCIFI = "SCIFI";
+    public static final String MEDEVIL = "MEDEVIL";
+    public static final String CRIME = "CRIME";
+    public static final String MYSTERY = "MYSTERY";
+    public static final String TRADGEY = "TRADGEY";
+    public static final String WESTREN = "WESTREN";
     private String chainName;
     private String chainID;
     private String chainAuthor;

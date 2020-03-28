@@ -1,4 +1,4 @@
-package com.example.writerchainapp.Adapters;
+package com.example.writerchainapp.recyclerviewsadapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.writerchainapp.Constructors.Chain;
@@ -14,17 +15,23 @@ import com.example.writerchainapp.R;
 
 import java.util.List;
 
+
+
 public class ChainAdapter extends RecyclerView.Adapter<ChainAdapter.ViewHolder> {
 
+    private OnChainlistener mListener;
     private List<Chain> chainsList;
+
     LayoutInflater layoutInflater;
-    ItemClickListener mClickListener;
+
 
     // data is passed into the constructor
-    public ChainAdapter(Context context, List<Chain> chainsList) {
+    public ChainAdapter(Context context, List<Chain> chainsList, OnChainlistener listener) {
         this.layoutInflater = LayoutInflater.from(context);
         this.chainsList = chainsList;
+        this.mListener = listener;
     }
+
 
     // inflates the row layout from xml when needed
     @Override
@@ -32,24 +39,21 @@ public class ChainAdapter extends RecyclerView.Adapter<ChainAdapter.ViewHolder> 
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.chainsrecyclerview_rows, parent, false);
 
-        return new ViewHolder(itemView);
+        return new ViewHolder(itemView, mListener);
     }
 
 
     // binds the data to the TextView in each row
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         Chain chain = chainsList.get(position);
-        holder.text_ChainID.setText(chain.getChainID());
-        holder.text_ChainTitle.setText(chain.getChainName());
-        holder.text_ChainAuthor.setText(chain.getChainAuthor());
-        holder.text_ChainDesc.setText(chain.getChainDescription());
-        holder.text_ChainDate.setText(chain.getDateCreated());
-        holder.text_ChainGenre.setText(chain.getChainGenre());
+        holder.textChainTitle.setText(chain.getChainName());
+        holder.textChainAuthor.setText(chain.getChainAuthor());
+        holder.textChainDesc.setText(chain.getChainDescription());
+        holder.textChainDate.setText(chain.getDateCreated());
+        holder.textChainGenre.setText(chain.getChainGenre());
 //        holder.text_ChainChapterCount.setText(chain.getChapterCount());
 //        holder.text_ChainUpvotes.setText(chain.getChainUpvotes());
-
 
     }
 
@@ -62,48 +66,39 @@ public class ChainAdapter extends RecyclerView.Adapter<ChainAdapter.ViewHolder> 
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView text_ChainID;
-        TextView text_ChainTitle;
-        TextView text_ChainDesc;
-        TextView text_ChainAuthor;
-        TextView text_ChainDate;
-        TextView text_ChainGenre;
-        TextView text_ChainChapterCount;
-        TextView text_ChainUpvotes;
 
 
-        ViewHolder(View itemView) {
+        TextView textChainTitle;
+        TextView textChainDesc;
+        TextView textChainAuthor;
+        TextView textChainDate;
+        TextView textChainGenre;
+        TextView textChainChapterCount;
+        TextView textChainUpvotes;
+        OnChainlistener mChainlistener;
+
+
+        ViewHolder(View itemView, OnChainlistener chainlistener) {
             super(itemView);
-            text_ChainID = itemView.findViewById(R.id.chainID);
-            text_ChainTitle = itemView.findViewById(R.id.chain_title);
-            text_ChainAuthor = itemView.findViewById(R.id.chain_author);
-            text_ChainDesc = itemView.findViewById(R.id.chain_desc);
-            text_ChainDate = itemView.findViewById(R.id.chain_datecreated);
-            text_ChainGenre = itemView.findViewById(R.id.chain_genre);
+            textChainTitle = itemView.findViewById(R.id.chain_title);
+            textChainAuthor = itemView.findViewById(R.id.chain_author);
+            textChainDesc = itemView.findViewById(R.id.chain_desc);
+            textChainDate = itemView.findViewById(R.id.chain_datecreated);
+            textChainGenre = itemView.findViewById(R.id.chain_genre);
 //            text_ChainChapterCount = itemView.findViewById(R.id.chain_chaptercount);
 //            text_ChainUpvotes = itemView.findViewById(R.id.chain_upvotes);
-
+            this.mChainlistener = chainlistener;
             itemView.setOnClickListener(this);
+
         }
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+            mChainlistener.onChainClick(getAdapterPosition());
         }
     }
 
-    // convenience method for getting data at click position
-    public Chain getItem(int id) {
-        return chainsList.get(id);
-    }
-
-    // allows clicks events to be caught
-    public void setClickListener(ItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
-    }
-
-    // parent activity will implement this method to respond to click events
-    public interface ItemClickListener {
-        void onItemClick(View view, int position);
+    public interface OnChainlistener{
+        void onChainClick(int position);
     }
 }

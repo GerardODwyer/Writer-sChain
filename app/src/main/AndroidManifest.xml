@@ -23,6 +23,7 @@
         <activity android:name=".ChainRecyclerView" />
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".GenreActivity" />
+        <activity android:name=".ui.login.HorrorActivity" />
     </application>
 
 </manifest>
