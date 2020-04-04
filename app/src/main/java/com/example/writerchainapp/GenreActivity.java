@@ -12,6 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.writerchainapp.Constructors.Chain;
 import com.example.writerchainapp.ui.login.HorrorActivity;
+import com.example.writerchainapp.ui.login.LoveActivity;
+import com.example.writerchainapp.ui.login.MedevilActivity;
+import com.example.writerchainapp.ui.login.ScifiActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -128,9 +131,8 @@ public class GenreActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
+
         });
-
-
 
 
         imageComdey.setOnClickListener(new View.OnClickListener() {
@@ -154,21 +156,27 @@ public class GenreActivity extends AppCompatActivity {
         imageLove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GenreActivity.this, "Love Clicked", Toast.LENGTH_SHORT).show();
+                intent = new Intent(GenreActivity.this, LoveActivity.class);
+                intent.putExtra(Chain.LOVE, (Serializable) loveList);
+                startActivity(intent);
             }
         });
 
         imageScifi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GenreActivity.this, "Scifi Clicked", Toast.LENGTH_SHORT).show();
+                intent = new Intent(GenreActivity.this, ScifiActivity.class);
+                intent.putExtra(Chain.SCIFI, (Serializable) scfiList);
+                startActivity(intent);
             }
         });
 
         imageMedevil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GenreActivity.this, "Medevil Clicked", Toast.LENGTH_SHORT).show();
+                intent = new Intent(GenreActivity.this, MedevilActivity.class);
+                intent.putExtra(Chain.MEDEVIL, (Serializable) medevilList);
+                startActivity(intent);
             }
         });
 
