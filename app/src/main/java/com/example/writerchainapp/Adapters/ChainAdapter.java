@@ -1,4 +1,4 @@
-package com.example.writerchainapp.recyclerviewsadapter;
+package com.example.writerchainapp.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

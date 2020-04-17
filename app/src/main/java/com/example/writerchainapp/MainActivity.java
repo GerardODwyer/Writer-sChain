@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.example.writerchainapp.Constructors.Chain;
 import com.example.writerchainapp.data.model.Chapters;
+import com.example.writerchainapp.utils.Help;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -63,7 +64,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        imageHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Help.class);
+                MainActivity.this.startActivity(intent);
 
+            }
+        });
 
 
     }

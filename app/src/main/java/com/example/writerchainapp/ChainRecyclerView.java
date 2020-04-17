@@ -1,5 +1,5 @@
-package com.example.writerchainapp;
 
+package com.example.writerchainapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.example.writerchainapp.recyclerviewsadapter.ChainAdapter;
+import com.example.writerchainapp.Adapters.ChainAdapter;
 import com.example.writerchainapp.Constructors.Chain;
-import com.example.writerchainapp.recyclerviewsadapter.ChainAdapter.OnChainlistener;
+import com.example.writerchainapp.Adapters.ChainAdapter.OnChainlistener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

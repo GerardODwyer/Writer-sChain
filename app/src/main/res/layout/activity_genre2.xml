@@ -5,18 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".GenreActivity"
+    tools:context=".Genre2Activity"
     android:background="@drawable/background">
 
     <ImageView
         android:id="@+id/image_comedy"
         android:layout_width="125dp"
         android:layout_height="125dp"
-        android:layout_marginTop="84dp"
-        app:layout_constraintStart_toEndOf="@id/arrowright"
+        android:layout_marginLeft="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/arrowright"
-        app:srcCompat="@drawable/comedy" />
+        app:srcCompat="@drawable/comedy"
+        tools:layout_editor_absoluteY="159dp" />
 
     <ImageView
         android:id="@+id/image_horror"
@@ -31,7 +30,7 @@
         android:id="@+id/image_medieval"
         android:layout_width="125dp"
         android:layout_height="125dp"
-       android:layout_marginLeft="16dp"
+        android:layout_marginLeft="16dp"
         app:layout_constraintStart_toEndOf="@id/image_scifi"
         app:layout_constraintTop_toTopOf="@id/image_scifi"
         app:srcCompat="@drawable/medieval" />
@@ -55,35 +54,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_comedy"
         app:srcCompat="@drawable/scifi" />
-
-    <ImageView
-        android:id="@+id/image_tragedy"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintStart_toEndOf="@id/image_mystery"
-        app:layout_constraintTop_toTopOf="@id/image_mystery"
-        app:srcCompat="@drawable/tragedy" />
-
-    <ImageView
-        android:id="@+id/image_mystery"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_scifi"
-        app:srcCompat="@drawable/unknown" />
-
-    <ImageView
-        android:id="@+id/image_western"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/image_tragedy"
-        app:layout_constraintTop_toTopOf="@id/image_tragedy"
-        app:srcCompat="@drawable/western" />
 
     <ImageView
         android:id="@+id/image_ci"
@@ -162,78 +132,32 @@
         app:layout_constraintStart_toStartOf="@+id/image_ci"
         app:layout_constraintTop_toBottomOf="@+id/image_ci" />
 
-    <TextView
-        android:id="@+id/text_mystery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Mystery"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/image_mystery"
-        app:layout_constraintStart_toStartOf="@+id/image_mystery"
-        app:layout_constraintTop_toBottomOf="@+id/image_mystery" />
-
-    <TextView
-        android:id="@+id/text_tradgey"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="tradgey"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/image_tragedy"
-        app:layout_constraintStart_toStartOf="@+id/image_tragedy"
-        app:layout_constraintTop_toBottomOf="@+id/image_tragedy" />
-
-    <TextView
-        android:id="@+id/text_western"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Western"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/image_western"
-        app:layout_constraintStart_toStartOf="@+id/image_western"
-        app:layout_constraintTop_toBottomOf="@+id/image_western" />
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
-        android:src="@drawable/genre2"
-        app:layout_constraintBottom_toTopOf="@+id/image_horror"
+        android:layout_marginStart="32dp"
+        android:src="@drawable/genre1"
+        app:layout_constraintBottom_toTopOf="@+id/image_comedy"
         app:layout_constraintStart_toEndOf="@+id/imageView5"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.491" />
+        app:layout_constraintVertical_bias="0.44" />
 
     <ImageView
         android:id="@+id/arrowright"
-        android:layout_width="120dp"
+        android:layout_width="135dp"
         android:layout_height="40dp"
-        android:layout_marginTop="75dp"
         android:src="@drawable/arrowr"
-        app:layout_constraintBottom_toTopOf="@+id/image_love"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.913"
         app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        tools:layout_editor_absoluteY="64dp" />
 
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="120dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="75dp"
+        android:layout_height="38dp"
         android:src="@drawable/arrowl"
-        app:layout_constraintBottom_toTopOf="@+id/image_comedy"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.067" />
+        tools:layout_editor_absoluteY="64dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,7 +15,6 @@ import com.example.writerchainapp.ui.login.HorrorActivity;
 import com.example.writerchainapp.ui.login.LoveActivity;
 import com.example.writerchainapp.ui.login.MedevilActivity;
 import com.example.writerchainapp.ui.login.ScifiActivity;
-import com.example.writerchainapp.utils.Help;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -29,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GenreActivity extends AppCompatActivity {
+public class Genre2Activity extends AppCompatActivity {
     private ImageView imageComdey;
     private ImageView imageHorror;
     private ImageView imageLove;
@@ -39,8 +38,6 @@ public class GenreActivity extends AppCompatActivity {
     private ImageView imageMystery;
     private ImageView imageTradgey;
     private ImageView imageWestren;
-    private ImageView arrowl;
-    private ImageView arrowr;
     private FirebaseDatabase database;
     private DatabaseReference dbReference;
     private FirebaseUser user;
@@ -141,7 +138,7 @@ public class GenreActivity extends AppCompatActivity {
         imageComdey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(GenreActivity.this, ComedyActivity.class);
+                intent = new Intent(Genre2Activity.this, ComedyActivity.class);
                 intent.putExtra(Chain.COMDEY, (Serializable) comdeyList);
                 startActivity(intent);
             }
@@ -150,7 +147,7 @@ public class GenreActivity extends AppCompatActivity {
         imageHorror.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(GenreActivity.this, HorrorActivity.class);
+                intent = new Intent(Genre2Activity.this, HorrorActivity.class);
                 intent.putExtra(Chain.HORROR, (Serializable) horrorList);
                 startActivity(intent);
             }
@@ -159,7 +156,7 @@ public class GenreActivity extends AppCompatActivity {
         imageLove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(GenreActivity.this, LoveActivity.class);
+                intent = new Intent(Genre2Activity.this, LoveActivity.class);
                 intent.putExtra(Chain.LOVE, (Serializable) loveList);
                 startActivity(intent);
             }
@@ -168,7 +165,7 @@ public class GenreActivity extends AppCompatActivity {
         imageScifi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(GenreActivity.this, ScifiActivity.class);
+                intent = new Intent(Genre2Activity.this, ScifiActivity.class);
                 intent.putExtra(Chain.SCIFI, (Serializable) scfiList);
                 startActivity(intent);
             }
@@ -177,7 +174,7 @@ public class GenreActivity extends AppCompatActivity {
         imageMedevil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(GenreActivity.this, MedevilActivity.class);
+                intent = new Intent(Genre2Activity.this, MedevilActivity.class);
                 intent.putExtra(Chain.MEDEVIL, (Serializable) medevilList);
                 startActivity(intent);
             }
@@ -186,44 +183,31 @@ public class GenreActivity extends AppCompatActivity {
         imageCrime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GenreActivity.this, "Crime Clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Genre2Activity.this, "Crime Clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
         imageMystery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GenreActivity.this, "Mystery Clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Genre2Activity.this, "Mystery Clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
         imageTradgey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GenreActivity.this, "Tradgey Clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Genre2Activity.this, "Tradgey Clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
         imageWestren.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GenreActivity.this, "Westren Clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Genre2Activity.this, "Westren Clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
-
-
-
-
-
-
-        arrowr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                intent = new Intent(GenreActivity.this, Genre2Activity.class);
-                startActivity(intent);
-            }
-        });
 
 
     }
@@ -239,6 +223,5 @@ public class GenreActivity extends AppCompatActivity {
         imageTradgey = findViewById(R.id.image_tragedy);
         imageWestren = findViewById(R.id.image_western);
 
-        arrowr = findViewById(R.id.arrowright);
     }
 }

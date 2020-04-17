@@ -14,10 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.writerchainapp.recyclerviewsadapter.ChainAdapter;
+import com.example.writerchainapp.Adapters.ChainAdapter;
 import com.example.writerchainapp.Constructors.Chain;
 import com.example.writerchainapp.data.model.Chapters;
-import com.example.writerchainapp.recyclerviewsadapter.ChainAdapter.OnChainlistener;
+import com.example.writerchainapp.Adapters.ChainAdapter.OnChainlistener;
 
 import com.example.writerchainapp.utils.Utils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
