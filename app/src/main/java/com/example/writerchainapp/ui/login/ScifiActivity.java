@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 
@@ -52,9 +53,10 @@ public class ScifiActivity extends AppCompatActivity implements OnChainlistener 
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
+        recyclerView = findViewById(R.id.recycler_view);
+        chain = new Chain();
         dbReference = database.getReference().child(user.getUid()).child("Chain");
         scifiList = new ArrayList<>();
-        recyclerView = findViewById(R.id.recycler_view);
         scifiList = (List<Chain>) getIntent().getExtras().getSerializable(Chain.SCIFI);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -88,14 +90,32 @@ public class ScifiActivity extends AppCompatActivity implements OnChainlistener 
         final AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_layout, null);
+
+        final EditText title = dialogView.findViewById(R.id.edt_title);
+        final EditText author = dialogView.findViewById(R.id.edt_author);
+        final EditText desc = dialogView.findViewById(R.id.edt_desc);
+        final EditText dateCreated = dialogView.findViewById(R.id.edt_date_created);
+        final EditText genre = dialogView.findViewById(R.id.edt_genre);
         Button button1 = dialogView.findViewById(R.id.buttonSubmit);
 
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String titleName = title.getText().toString();
+                String authorName = author.getText().toString();
+                String description = desc.getText().toString();
+                String date = dateCreated.getText().toString();
+                String genreName = "SciFi";
+
+                chain.setChainName(titleName);
+                chain.setChainAuthor(authorName);
+                chain.setChainDescription(description);
+                chain.setDateCreated(date);
+                chain.setChainGenre(genreName);
                 Utils.saveDataToFirebase(chain, dbReference);
                 dialogBuilder.dismiss();
+                onBackPressed();
             }
         });
 
@@ -104,8 +124,9 @@ public class ScifiActivity extends AppCompatActivity implements OnChainlistener 
     }
 
 
+
     @Override
     public void onChainClick(final int position) {
-        Toast.makeText(getApplicationContext(), "Position is " + scifiList.get(position), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Position is " + scifiList.get(position).getChainID(), Toast.LENGTH_SHORT).show();
     }
 }

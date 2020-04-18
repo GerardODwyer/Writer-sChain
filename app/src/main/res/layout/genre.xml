@@ -13,9 +13,9 @@
         android:layout_width="125dp"
         android:layout_height="125dp"
         android:layout_marginTop="84dp"
-        app:layout_constraintStart_toEndOf="@id/arrowright"
+        app:layout_constraintStart_toEndOf="@id/arrowrightP1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/arrowright"
+        app:layout_constraintTop_toTopOf="@id/arrowrightP1"
         app:srcCompat="@drawable/comedy" />
 
     <ImageView
@@ -31,7 +31,7 @@
         android:id="@+id/image_medieval"
         android:layout_width="125dp"
         android:layout_height="125dp"
-       android:layout_marginLeft="16dp"
+        android:layout_marginLeft="16dp"
         app:layout_constraintStart_toEndOf="@id/image_scifi"
         app:layout_constraintTop_toTopOf="@id/image_scifi"
         app:srcCompat="@drawable/medieval" />
@@ -199,41 +199,41 @@
         app:layout_constraintTop_toBottomOf="@+id/image_western" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/genrePage1"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp"
-        android:src="@drawable/genre2"
+        android:src="@drawable/genre1"
         app:layout_constraintBottom_toTopOf="@+id/image_horror"
-        app:layout_constraintStart_toEndOf="@+id/imageView5"
+        app:layout_constraintStart_toEndOf="@+id/arrowleftP1"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.491" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
-        android:id="@+id/arrowright"
+        android:id="@+id/arrowrightP1"
         android:layout_width="120dp"
         android:layout_height="40dp"
         android:layout_marginTop="75dp"
         android:src="@drawable/arrowr"
         app:layout_constraintBottom_toTopOf="@+id/image_love"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.913"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.744"
+        app:layout_constraintStart_toEndOf="@+id/genrePage1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/arrowleftP1"
         android:layout_width="120dp"
         android:layout_height="40dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="75dp"
         android:src="@drawable/arrowl"
         app:layout_constraintBottom_toTopOf="@+id/image_comedy"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.067" />
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

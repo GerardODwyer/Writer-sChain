@@ -1,5 +1,6 @@
 package com.example.writerchainapp;
 
+import android.provider.ContactsContract;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -55,6 +56,15 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        imageProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                MainActivity.this.startActivity(intent);
+
+            }
+        });
+
 
         imageGenre.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
         imageHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

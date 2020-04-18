@@ -16,6 +16,15 @@ public class Chain implements Serializable {
     public static final String MYSTERY = "MYSTERY";
     public static final String TRADGEY = "TRADGEY";
     public static final String WESTREN = "WESTREN";
+    public static final String ACTION = "ACTION";
+    public static final String ADVENTURE = "ADVENTURE";
+    public static final String DRAMA = "DRAMA";
+    public static final String FANFIC = "FANFIC";
+    public static final String FANTASY = "FANTASY";
+    public static final String FAIRYTALE = "FAIRYTALE";
+    public static final String MAGICREALISM = "MAGICREALISM";
+    public static final String CONSPIRACY = "CONSPIRACY";
+    public static final String DETECTIVE = "DETECTIVE";
     private String chainName;
     private String chainID;
     private String chainAuthor;

@@ -29,28 +29,30 @@ import java.util.List;
 
 
 public class Genre2Activity extends AppCompatActivity {
-    private ImageView imageComdey;
-    private ImageView imageHorror;
-    private ImageView imageLove;
-    private ImageView imageScifi;
-    private ImageView imageMedevil;
-    private ImageView imageCrime;
-    private ImageView imageMystery;
-    private ImageView imageTradgey;
-    private ImageView imageWestren;
+    private ImageView imageAction;
+    private ImageView imageAdventure;
+    private ImageView imageDrama;
+    private ImageView imageFanfic;
+    private ImageView imageFantasy;
+    private ImageView imageFairytale;
+    private ImageView imageMagicrealism;
+    private ImageView imageConspiracy;
+    private ImageView imageDetective;
+    private ImageView arrowleft;
+    private ImageView arrowright;
     private FirebaseDatabase database;
     private DatabaseReference dbReference;
     private FirebaseUser user;
     private FirebaseAuth auth;
-    private List<Chain> comdeyList;
-    private List<Chain> horrorList;
-    private List<Chain> loveList;
-    private List<Chain> scfiList;
-    private List<Chain> medevilList;
-    private List<Chain> crimeList;
-    private List<Chain> mysteryList;
-    private List<Chain> tradgeyList;
-    private List<Chain> westrenList;
+    private List<Chain> ActionList;
+    private List<Chain> AdventureList;
+    private List<Chain> DramaList;
+    private List<Chain> FanficList;
+    private List<Chain> FantasyList;
+    private List<Chain> FairytaleList;
+    private List<Chain> MagicrealismList;
+    private List<Chain> ConspiracyList;
+    private List<Chain> DetectiveList;
     private Chain chain;
 
     Intent intent;
@@ -59,22 +61,22 @@ public class Genre2Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.genre);
+        setContentView(R.layout.activity_genre2);
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
         setupVariables();
         chain = new Chain();
         dbReference = database.getReference().child(user.getUid()).child("Chain");
-        comdeyList = new ArrayList<>();
-        horrorList = new ArrayList<>();
-        loveList = new ArrayList<>();
-        scfiList = new ArrayList<>();
-        medevilList = new ArrayList<>();
-        crimeList = new ArrayList<>();
-        mysteryList = new ArrayList<>();
-        tradgeyList = new ArrayList<>();
-        westrenList = new ArrayList<>();
+        ActionList = new ArrayList<>();
+        AdventureList = new ArrayList<>();
+        DramaList = new ArrayList<>();
+        FanficList = new ArrayList<>();
+        FantasyList = new ArrayList<>();
+        FairytaleList = new ArrayList<>();
+        MagicrealismList = new ArrayList<>();
+        ConspiracyList = new ArrayList<>();
+        DetectiveList = new ArrayList<>();
 
         dbReference.addChildEventListener(new ChildEventListener() {
             @Override
@@ -84,31 +86,32 @@ public class Genre2Activity extends AppCompatActivity {
                 dataSnapshot.getValue();
                 chain = dataSnapshot.getValue(Chain.class);
                 switch (chain.getChainGenre().toUpperCase()){
-                    case Chain.COMDEY:
-                        comdeyList.add(chain);
+                    case Chain.ACTION:
+                        ActionList.add(chain);
                         break;
-                    case Chain.HORROR:
-                        horrorList.add(chain);
+                    case Chain.ADVENTURE:
+                        AdventureList.add(chain);
                         break;
-                    case Chain.LOVE:
-                        loveList.add(chain);
+                    case Chain.DRAMA:
+                        DramaList.add(chain);
                         break;
-                    case Chain.SCIFI:
-                        scfiList.add(chain);
-                    case Chain.MEDEVIL:
-                        medevilList.add(chain);
+                    case Chain.FANFIC:
+                        FanficList.add(chain);
                         break;
-                    case Chain.CRIME:
-                        crimeList.add(chain);
+                    case Chain.FANTASY:
+                        FantasyList.add(chain);
                         break;
-                    case Chain.MYSTERY:
-                        mysteryList.add(chain);
+                    case Chain.FAIRYTALE:
+                        FairytaleList.add(chain);
                         break;
-                    case Chain.TRADGEY:
-                        tradgeyList.add(chain);
+                    case Chain.MAGICREALISM:
+                        MagicrealismList.add(chain);
                         break;
-                    case Chain.WESTREN:
-                        westrenList.add(chain);
+                    case Chain.CONSPIRACY:
+                        ConspiracyList.add(chain);
+                        break;
+                    case Chain.DETECTIVE:
+                        DetectiveList.add(chain);
                         break;
                     default:
                         Toast.makeText(getApplicationContext(), "Genre not found please check and try again", Toast.LENGTH_LONG).show();
@@ -135,76 +138,101 @@ public class Genre2Activity extends AppCompatActivity {
         });
 
 
-        imageComdey.setOnClickListener(new View.OnClickListener() {
+        imageAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(Genre2Activity.this, ComedyActivity.class);
-                intent.putExtra(Chain.COMDEY, (Serializable) comdeyList);
+                intent = new Intent(Genre2Activity.this, ActionActivity.class);
+                intent.putExtra(Chain.ACTION, (Serializable) ActionList);
                 startActivity(intent);
             }
         });
 
-        imageHorror.setOnClickListener(new View.OnClickListener() {
+        imageAdventure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(Genre2Activity.this, HorrorActivity.class);
-                intent.putExtra(Chain.HORROR, (Serializable) horrorList);
+                intent = new Intent(Genre2Activity.this, AdventureActivity.class);
+                intent.putExtra(Chain.ADVENTURE, (Serializable) AdventureList);
                 startActivity(intent);
             }
         });
 
-        imageLove.setOnClickListener(new View.OnClickListener() {
+        imageDrama.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intent = new Intent(Genre2Activity.this, LoveActivity.class);
-                intent.putExtra(Chain.LOVE, (Serializable) loveList);
+                intent.putExtra(Chain.DRAMA, (Serializable) DramaList);
                 startActivity(intent);
             }
         });
 
-        imageScifi.setOnClickListener(new View.OnClickListener() {
+        imageFanfic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intent = new Intent(Genre2Activity.this, ScifiActivity.class);
-                intent.putExtra(Chain.SCIFI, (Serializable) scfiList);
+                intent.putExtra(Chain.FANFIC, (Serializable) FanficList);
                 startActivity(intent);
             }
         });
 
-        imageMedevil.setOnClickListener(new View.OnClickListener() {
+        imageFantasy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intent = new Intent(Genre2Activity.this, MedevilActivity.class);
-                intent.putExtra(Chain.MEDEVIL, (Serializable) medevilList);
+                intent.putExtra(Chain.FANTASY, (Serializable) FantasyList);
                 startActivity(intent);
             }
         });
 
-        imageCrime.setOnClickListener(new View.OnClickListener() {
+        imageFairytale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Genre2Activity.this, "Crime Clicked", Toast.LENGTH_SHORT).show();
+                intent = new Intent(Genre2Activity.this, MedevilActivity.class);
+                intent.putExtra(Chain.FAIRYTALE, (Serializable) FairytaleList);
+                startActivity(intent);
             }
         });
 
-        imageMystery.setOnClickListener(new View.OnClickListener() {
+        imageMagicrealism.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Genre2Activity.this, "Mystery Clicked", Toast.LENGTH_SHORT).show();
+                intent = new Intent(Genre2Activity.this, MedevilActivity.class);
+                intent.putExtra(Chain.MAGICREALISM, (Serializable) MagicrealismList);
+                startActivity(intent);
             }
         });
 
-        imageTradgey.setOnClickListener(new View.OnClickListener() {
+        imageConspiracy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Genre2Activity.this, "Tradgey Clicked", Toast.LENGTH_SHORT).show();
+                intent = new Intent(Genre2Activity.this, MedevilActivity.class);
+                intent.putExtra(Chain.CONSPIRACY, (Serializable) ConspiracyList);
+                startActivity(intent);
             }
         });
 
-        imageWestren.setOnClickListener(new View.OnClickListener() {
+        imageDetective.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Genre2Activity.this, "Westren Clicked", Toast.LENGTH_SHORT).show();
+                intent = new Intent(Genre2Activity.this, MedevilActivity.class);
+                intent.putExtra(Chain.DETECTIVE, (Serializable) DetectiveList);
+                startActivity(intent);
+            }
+        });
+
+
+        arrowleft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(Genre2Activity.this, GenreActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        arrowright.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(Genre2Activity.this, GenreActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -213,15 +241,18 @@ public class Genre2Activity extends AppCompatActivity {
     }
 
     public void setupVariables(){
-        imageComdey = findViewById(R.id.image_comedy);
-        imageHorror = findViewById(R.id.image_horror);
-        imageLove = findViewById(R.id.image_love);
-        imageScifi = findViewById(R.id.image_scifi);
-        imageMedevil = findViewById(R.id.image_medieval);
-        imageCrime = findViewById(R.id.image_ci);
-        imageMystery = findViewById(R.id.image_mystery);
-        imageTradgey = findViewById(R.id.image_tragedy);
-        imageWestren = findViewById(R.id.image_western);
+        imageAction = findViewById(R.id.image_action);
+        imageAdventure = findViewById(R.id.image_adventure);
+        imageDrama = findViewById(R.id.image_drama);
+        imageFanfic = findViewById(R.id.image_fanfic);
+        imageFantasy = findViewById(R.id.image_fantasy);
+        imageFairytale = findViewById(R.id.image_fairytale);
+        imageMagicrealism = findViewById(R.id.image_magicrealism);
+        imageConspiracy = findViewById(R.id.image_conspiricy);
+        imageDetective = findViewById(R.id.image_detective);
+
+        arrowleft = findViewById(R.id.arrowleftP2);
+        arrowright = findViewById(R.id.arrowrightP2);
 
     }
 }

@@ -1,4 +1,10 @@
-package com.example.writerchainapp.ui.login;
+package com.example.writerchainapp;
+
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,17 +15,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.writerchainapp.Adapters.ChainAdapter;
 import com.example.writerchainapp.Constructors.Chain;
-import com.example.writerchainapp.R;
 import com.example.writerchainapp.data.model.Chapters;
 import com.example.writerchainapp.Adapters.ChainAdapter.OnChainlistener;
+
 import com.example.writerchainapp.utils.Utils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,11 +31,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HorrorActivity extends AppCompatActivity implements OnChainlistener {
+public class TradgeyActivity extends AppCompatActivity implements OnChainlistener {
 
     private FirebaseDatabase database;
     private DatabaseReference dbReference;
-    private List<Chain> horrorList;
+    private List<Chain> tradgeyList;
     private List<Chapters> chapters = new ArrayList<>();
     private FirebaseUser user;
     private FirebaseAuth auth;
@@ -43,13 +43,13 @@ public class HorrorActivity extends AppCompatActivity implements OnChainlistener
     private FloatingActionButton fab;
     private ChainAdapter chainAdapter;
     private RecyclerView recyclerView;
-    //private OnChainlistener recyclerClickListener;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_horror);
+        setContentView(R.layout.activity_tradgey);
         fab = findViewById(R.id.floatingActionButton);
         recyclerView = findViewById(R.id.recycler_view);
         database = FirebaseDatabase.getInstance();
@@ -57,13 +57,15 @@ public class HorrorActivity extends AppCompatActivity implements OnChainlistener
         user = auth.getCurrentUser();
         dbReference = database.getReference().child(user.getUid()).child("Chain");
         chain = new Chain();
-        horrorList = new ArrayList<>();
-        horrorList = (List<Chain>) getIntent().getExtras().getSerializable(Chain.HORROR);
+        tradgeyList = new ArrayList<>();
+        tradgeyList = (List<Chain>) getIntent().getExtras().getSerializable(Chain.TRADGEY);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createDialog(getApplicationContext());
+
+
             }
         });
 
@@ -81,11 +83,11 @@ public class HorrorActivity extends AppCompatActivity implements OnChainlistener
         super.onResume();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        chainAdapter = new ChainAdapter(getApplicationContext(), horrorList, this);
+        chainAdapter = new ChainAdapter(getApplicationContext(), tradgeyList, this);
         recyclerView.setAdapter(chainAdapter);
         chainAdapter.notifyDataSetChanged();
-    }
 
+    }
 
     public void createDialog(Context context){
         final AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();
@@ -107,7 +109,7 @@ public class HorrorActivity extends AppCompatActivity implements OnChainlistener
                 String authorName = author.getText().toString();
                 String description = desc.getText().toString();
                 String date = dateCreated.getText().toString();
-                String genreName = "Horror";
+                String genreName = "Tradgey";
 
                 chain.setChainName(titleName);
                 chain.setChainAuthor(authorName);
@@ -128,6 +130,6 @@ public class HorrorActivity extends AppCompatActivity implements OnChainlistener
 
     @Override
     public void onChainClick(final int position) {
-        Toast.makeText(getApplicationContext(), "Position is " + horrorList.get(position).getChainID(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Position is " + tradgeyList.get(position).getChainID(), Toast.LENGTH_SHORT).show();
     }
 }

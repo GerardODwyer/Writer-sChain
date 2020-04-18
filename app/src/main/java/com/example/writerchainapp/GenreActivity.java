@@ -1,10 +1,10 @@
 package com.example.writerchainapp;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -15,7 +15,6 @@ import com.example.writerchainapp.ui.login.HorrorActivity;
 import com.example.writerchainapp.ui.login.LoveActivity;
 import com.example.writerchainapp.ui.login.MedevilActivity;
 import com.example.writerchainapp.ui.login.ScifiActivity;
-import com.example.writerchainapp.utils.Help;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -39,8 +38,8 @@ public class GenreActivity extends AppCompatActivity {
     private ImageView imageMystery;
     private ImageView imageTradgey;
     private ImageView imageWestren;
-    private ImageView arrowl;
-    private ImageView arrowr;
+    private ImageView arrowleft;
+    private ImageView arrowright;
     private FirebaseDatabase database;
     private DatabaseReference dbReference;
     private FirebaseUser user;
@@ -62,7 +61,10 @@ public class GenreActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.genre);
+
+
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
@@ -186,28 +188,36 @@ public class GenreActivity extends AppCompatActivity {
         imageCrime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GenreActivity.this, "Crime Clicked", Toast.LENGTH_SHORT).show();
+                intent = new Intent(GenreActivity.this, CrimeActivity.class);
+                intent.putExtra(Chain.CRIME, (Serializable) crimeList);
+                startActivity(intent);
             }
         });
 
         imageMystery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GenreActivity.this, "Mystery Clicked", Toast.LENGTH_SHORT).show();
+                intent = new Intent(GenreActivity.this, MysteryActivity.class);
+                intent.putExtra(Chain.MYSTERY, (Serializable) mysteryList);
+                startActivity(intent);
             }
         });
 
         imageTradgey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GenreActivity.this, "Tradgey Clicked", Toast.LENGTH_SHORT).show();
+                intent = new Intent(GenreActivity.this, TradgeyActivity.class);
+                intent.putExtra(Chain.TRADGEY, (Serializable) tradgeyList);
+                startActivity(intent);
             }
         });
 
         imageWestren.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GenreActivity.this, "Westren Clicked", Toast.LENGTH_SHORT).show();
+                intent = new Intent(GenreActivity.this, WesternActivity.class);
+                intent.putExtra(Chain.WESTREN, (Serializable) westrenList);
+                startActivity(intent);
             }
         });
 
@@ -216,8 +226,15 @@ public class GenreActivity extends AppCompatActivity {
 
 
 
+        arrowleft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(GenreActivity.this, Genre2Activity.class);
+                startActivity(intent);
+            }
+        });
 
-        arrowr.setOnClickListener(new View.OnClickListener() {
+        arrowright.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intent = new Intent(GenreActivity.this, Genre2Activity.class);
@@ -239,6 +256,7 @@ public class GenreActivity extends AppCompatActivity {
         imageTradgey = findViewById(R.id.image_tragedy);
         imageWestren = findViewById(R.id.image_western);
 
-        arrowr = findViewById(R.id.arrowright);
+        arrowright = findViewById(R.id.arrowrightP1);
+        arrowleft = findViewById(R.id.arrowleftP1);
     }
 }
