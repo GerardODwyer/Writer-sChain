@@ -159,7 +159,7 @@ public class Genre2Activity extends AppCompatActivity {
         imageDrama.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(Genre2Activity.this, LoveActivity.class);
+                intent = new Intent(Genre2Activity.this, DramaActivity.class);
                 intent.putExtra(Chain.DRAMA, (Serializable) DramaList);
                 startActivity(intent);
             }
@@ -168,7 +168,7 @@ public class Genre2Activity extends AppCompatActivity {
         imageFanfic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(Genre2Activity.this, ScifiActivity.class);
+                intent = new Intent(Genre2Activity.this, FanficActivity.class);
                 intent.putExtra(Chain.FANFIC, (Serializable) FanficList);
                 startActivity(intent);
             }
@@ -177,7 +177,7 @@ public class Genre2Activity extends AppCompatActivity {
         imageFantasy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(Genre2Activity.this, MedevilActivity.class);
+                intent = new Intent(Genre2Activity.this, FantasyActivity.class);
                 intent.putExtra(Chain.FANTASY, (Serializable) FantasyList);
                 startActivity(intent);
             }
@@ -186,7 +186,7 @@ public class Genre2Activity extends AppCompatActivity {
         imageFairytale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(Genre2Activity.this, MedevilActivity.class);
+                intent = new Intent(Genre2Activity.this, FairytaleActivity.class);
                 intent.putExtra(Chain.FAIRYTALE, (Serializable) FairytaleList);
                 startActivity(intent);
             }

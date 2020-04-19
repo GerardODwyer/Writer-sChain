@@ -1,13 +1,11 @@
 package com.example.writerchainapp;
 
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,25 +17,24 @@ import android.widget.Toast;
 import com.example.writerchainapp.Adapters.ChainAdapter;
 import com.example.writerchainapp.Constructors.Chain;
 import com.example.writerchainapp.data.model.Chapters;
-import com.example.writerchainapp.Adapters.ChainAdapter.OnChainlistener;
-
 import com.example.writerchainapp.utils.Utils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.example.writerchainapp.Adapters.ChainAdapter.OnChainlistener;
 
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ComedyActivity extends AppCompatActivity implements OnChainlistener {
+public class FanficActivity extends AppCompatActivity implements OnChainlistener {
+
 
     private FirebaseDatabase database;
     private DatabaseReference dbReference;
-    private List<Chain> comdeyList;
+    private List<Chain> fanficList;
     private List<Chapters> chapters = new ArrayList<>();
     private FirebaseUser user;
     private FirebaseAuth auth;
@@ -46,14 +43,11 @@ public class ComedyActivity extends AppCompatActivity implements OnChainlistener
     private ChainAdapter chainAdapter;
     private RecyclerView recyclerView;
 
-    Intent intent;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comedy);
+        setContentView(R.layout.activity_fanfic);
         fab = findViewById(R.id.floatingActionButton);
         recyclerView = findViewById(R.id.recycler_view);
         database = FirebaseDatabase.getInstance();
@@ -61,8 +55,8 @@ public class ComedyActivity extends AppCompatActivity implements OnChainlistener
         user = auth.getCurrentUser();
         dbReference = database.getReference().child(user.getUid()).child("Chain");
         chain = new Chain();
-        comdeyList = new ArrayList<>();
-        comdeyList = (List<Chain>) getIntent().getExtras().getSerializable(Chain.COMDEY);
+        fanficList = new ArrayList<>();
+        fanficList = (List<Chain>) getIntent().getExtras().getSerializable(Chain.FANFIC);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,13 +81,13 @@ public class ComedyActivity extends AppCompatActivity implements OnChainlistener
         super.onResume();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        chainAdapter = new ChainAdapter(getApplicationContext(), comdeyList, this);
+        chainAdapter = new ChainAdapter(getApplicationContext(), fanficList, this);
         recyclerView.setAdapter(chainAdapter);
         chainAdapter.notifyDataSetChanged();
 
     }
 
-    public void createDialog(Context context){
+    public void createDialog(Context context) {
         final AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_layout, null);
@@ -113,7 +107,7 @@ public class ComedyActivity extends AppCompatActivity implements OnChainlistener
                 String authorName = author.getText().toString();
                 String description = desc.getText().toString();
                 String date = dateCreated.getText().toString();
-                String genreName = genre.getText().toString();
+                String genreName = "Fanfic";
 
                 chain.setChainName(titleName);
                 chain.setChainAuthor(authorName);
@@ -122,9 +116,7 @@ public class ComedyActivity extends AppCompatActivity implements OnChainlistener
                 chain.setChainGenre(genreName);
                 Utils.saveDataToFirebase(chain, dbReference);
                 dialogBuilder.dismiss();
-                //onBackPressed();
-                chainAdapter.notifyDataSetChanged();
-
+                onBackPressed();
             }
         });
 
@@ -133,14 +125,8 @@ public class ComedyActivity extends AppCompatActivity implements OnChainlistener
     }
 
 
-
     @Override
     public void onChainClick(final int position) {
-        Toast.makeText(getApplicationContext(), "Position is " + comdeyList.get(position).getChainID(), Toast.LENGTH_SHORT).show();
-
-        intent = new Intent(ComedyActivity.this, ChainInfoActivity.class);
-        String chainID = comdeyList.get(position).getChainID();
-        intent.putExtra("ChainID", chainID);
-        startActivity(intent);
+        Toast.makeText(getApplicationContext(), "Position is " + fanficList.get(position).getChainID(), Toast.LENGTH_SHORT).show();
     }
 }

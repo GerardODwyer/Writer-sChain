@@ -11,7 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AdventureActivity"></activity>
+        <activity android:name=".ChainInfoActivity"></activity>
+        <activity android:name=".FantasyActivity" />
+        <activity android:name=".FairytaleActivity" />
+        <activity android:name=".FanficActivity" />
+        <activity android:name=".DramaActivity" />
+        <activity android:name=".AdventureActivity" />
         <activity android:name=".ActionActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".MysteryActivity" />
