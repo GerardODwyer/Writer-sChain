@@ -41,7 +41,7 @@ public class ChainInfoActivity extends AppCompatActivity {
       //  String test =(String) b.get("chainID");
         chainID.setText(chainId);
 
-      //  dbReference = database.getReference().child(user.getUid()).child("Chain").child(chainId);
+      //   dbReference = database.getReference().child(user.getUid()).child("Chain").child(chainId);
 
 
 
