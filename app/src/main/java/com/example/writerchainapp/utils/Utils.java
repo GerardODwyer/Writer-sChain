@@ -9,15 +9,18 @@ import java.util.UUID;
 
 public class Utils {
 
+
     public static void saveDataToFirebase(Chain chain, DatabaseReference dbReference){
-        DatabaseReference newDb = dbReference.push();
+        DatabaseReference newDb = dbReference;
+        String uuid = UUID.randomUUID().toString();
         Map<String, String> saveData = new HashMap<>();
-        saveData.put("chainId",  UUID.randomUUID().toString());
+        saveData.put("chainID", uuid);
         saveData.put("chainAuthor", chain.getChainAuthor());
         saveData.put("chainDesc", chain.getChainDescription());
         saveData.put("chainGenre", chain.getChainGenre());
         saveData.put("chainName", chain.getChainName());
         //saveData.put("chainChapterCount", String.valueOf(chain.getChapterCount()));
-        newDb.getRef().child("").setValue(saveData);
+        newDb.child(uuid).setValue(saveData);
+
     }
 }

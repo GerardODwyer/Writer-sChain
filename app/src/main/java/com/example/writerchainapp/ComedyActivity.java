@@ -25,6 +25,7 @@ import com.example.writerchainapp.utils.Utils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -32,6 +33,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import com.example.writerchainapp.Adapters.RecyclerTouchListener;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class ComedyActivity extends AppCompatActivity implements OnChainlistener {
 
@@ -72,6 +76,27 @@ public class ComedyActivity extends AppCompatActivity implements OnChainlistener
 
             }
         });
+
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                chain = comdeyList.get(position);
+                Toast.makeText(getApplicationContext(), chain.getChainID() + " is selected!", Toast.LENGTH_SHORT).show();
+
+
+
+
+
+                String chainID = chain.getChainID();
+
+                intent = new Intent(ComedyActivity.this, ChainInfoActivity.class);
+                intent.putExtra("chainID", chainID);
+                startActivity(intent);
+            }
+
+            public void onLongClick(View view, int position) {
+            }
+        }));
 
     }
 
@@ -136,11 +161,12 @@ public class ComedyActivity extends AppCompatActivity implements OnChainlistener
 
     @Override
     public void onChainClick(final int position) {
-        Toast.makeText(getApplicationContext(), "Position is " + comdeyList.get(position).getChainID(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Position is " + comdeyList.toString(), Toast.LENGTH_SHORT).show();
 
-        intent = new Intent(ComedyActivity.this, ChainInfoActivity.class);
-        String chainID = comdeyList.get(position).getChainID();
-        intent.putExtra("ChainID", chainID);
-        startActivity(intent);
+        //intent = new Intent(ComedyActivity.this, ChainInfoActivity.class);
+        //String chainName = comdeyList.get(position).getChainName();
+        //intent.putExtra("ChainName", chainName);
+        //startActivity(intent);
     }
+
 }
