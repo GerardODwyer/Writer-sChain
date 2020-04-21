@@ -2,6 +2,7 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -13,11 +14,11 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:padding="8dp"
-            android:text="Add A New Chain In The Box Below!"
+            android:text="Add A New Chapter In The Box Below!"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -26,10 +27,10 @@
             android:id="@+id/edt_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:hint="Enter Title "
+            android:layout_marginEnd="8dp"
+            android:hint="Enter Chapter Title "
             android:inputType="textMultiLine|text"
             android:padding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -83,31 +84,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edt_desc" />
 
-        <TextView
-            android:id="@+id/edt_genre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:hint="Enter Genre"
-            android:inputType="text"
-            android:padding="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edt_date_created" />
-
         <Button
             android:id="@+id/buttonDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="Add Chain"
+            android:layout_marginBottom="16dp"
+            android:text="Add Chapter"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/edt_title"
             app:layout_constraintStart_toStartOf="@+id/edt_title"
-            app:layout_constraintTop_toBottomOf="@+id/edt_genre" />
+            app:layout_constraintTop_toBottomOf="@+id/edt_date_created" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

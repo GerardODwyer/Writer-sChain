@@ -1,6 +1,5 @@
 package com.example.writerchainapp;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,10 +10,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.writerchainapp.Constructors.Chain;
-import com.example.writerchainapp.ui.login.HorrorActivity;
-import com.example.writerchainapp.ui.login.LoveActivity;
-import com.example.writerchainapp.ui.login.MedevilActivity;
-import com.example.writerchainapp.ui.login.ScifiActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -141,8 +136,9 @@ public class Genre2Activity extends AppCompatActivity {
         imageAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(Genre2Activity.this, ActionActivity.class);
+                intent = new Intent(Genre2Activity.this, SingleGenreActivity.class);
                 intent.putExtra(Chain.ACTION, (Serializable) ActionList);
+                intent.putExtra("genre", Chain.ACTION);
                 startActivity(intent);
             }
         });
@@ -150,8 +146,9 @@ public class Genre2Activity extends AppCompatActivity {
         imageAdventure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(Genre2Activity.this, AdventureActivity.class);
+                intent = new Intent(Genre2Activity.this, SingleGenreActivity.class);
                 intent.putExtra(Chain.ADVENTURE, (Serializable) AdventureList);
+                intent.putExtra("genre", Chain.ADVENTURE);
                 startActivity(intent);
             }
         });
@@ -159,8 +156,9 @@ public class Genre2Activity extends AppCompatActivity {
         imageDrama.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(Genre2Activity.this, DramaActivity.class);
+                intent = new Intent(Genre2Activity.this, SingleGenreActivity.class);
                 intent.putExtra(Chain.DRAMA, (Serializable) DramaList);
+                intent.putExtra("genre", Chain.DRAMA);
                 startActivity(intent);
             }
         });
@@ -168,8 +166,9 @@ public class Genre2Activity extends AppCompatActivity {
         imageFanfic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(Genre2Activity.this, FanficActivity.class);
+                intent = new Intent(Genre2Activity.this, SingleGenreActivity.class);
                 intent.putExtra(Chain.FANFIC, (Serializable) FanficList);
+                intent.putExtra("genre", Chain.FANFIC);
                 startActivity(intent);
             }
         });
@@ -177,8 +176,9 @@ public class Genre2Activity extends AppCompatActivity {
         imageFantasy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(Genre2Activity.this, FantasyActivity.class);
+                intent = new Intent(Genre2Activity.this, SingleGenreActivity.class);
                 intent.putExtra(Chain.FANTASY, (Serializable) FantasyList);
+                intent.putExtra("genre", Chain.FANTASY);
                 startActivity(intent);
             }
         });
@@ -186,8 +186,9 @@ public class Genre2Activity extends AppCompatActivity {
         imageFairytale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(Genre2Activity.this, FairytaleActivity.class);
+                intent = new Intent(Genre2Activity.this, SingleGenreActivity.class);
                 intent.putExtra(Chain.FAIRYTALE, (Serializable) FairytaleList);
+                intent.putExtra("genre", Chain.FAIRYTALE);
                 startActivity(intent);
             }
         });
@@ -195,8 +196,9 @@ public class Genre2Activity extends AppCompatActivity {
         imageMagicrealism.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(Genre2Activity.this, MedevilActivity.class);
+                intent = new Intent(Genre2Activity.this, SingleGenreActivity.class);
                 intent.putExtra(Chain.MAGICREALISM, (Serializable) MagicrealismList);
+                intent.putExtra("genre", Chain.MAGICREALISM);
                 startActivity(intent);
             }
         });
@@ -204,8 +206,9 @@ public class Genre2Activity extends AppCompatActivity {
         imageConspiracy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(Genre2Activity.this, MedevilActivity.class);
+                intent = new Intent(Genre2Activity.this, SingleGenreActivity.class);
                 intent.putExtra(Chain.CONSPIRACY, (Serializable) ConspiracyList);
+                intent.putExtra("genre", Chain.CONSPIRACY);
                 startActivity(intent);
             }
         });
@@ -213,8 +216,9 @@ public class Genre2Activity extends AppCompatActivity {
         imageDetective.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(Genre2Activity.this, MedevilActivity.class);
+                intent = new Intent(Genre2Activity.this, SingleGenreActivity.class);
                 intent.putExtra(Chain.DETECTIVE, (Serializable) DetectiveList);
+                intent.putExtra("genre", Chain.DETECTIVE);
                 startActivity(intent);
             }
         });

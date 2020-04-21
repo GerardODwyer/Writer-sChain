@@ -8,13 +8,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.writerchainapp.MainActivity;
@@ -50,7 +47,6 @@ public class  LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Signed in", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
-
                 }
             }
         };

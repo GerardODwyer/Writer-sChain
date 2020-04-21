@@ -1,53 +1,59 @@
 package com.example.writerchainapp;
 
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.writerchainapp.Adapters.ChainAdapter;
 import com.example.writerchainapp.Constructors.Chain;
-import com.example.writerchainapp.data.model.Chapters;
+import com.example.writerchainapp.Adapters.ChainAdapter.OnChainlistener;
+
 import com.example.writerchainapp.utils.Utils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.example.writerchainapp.Adapters.ChainAdapter.OnChainlistener;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
-public class CrimeActivity extends AppCompatActivity implements OnChainlistener {
+import com.example.writerchainapp.Adapters.RecyclerTouchListener;
 
+public class SingleGenreActivity extends AppCompatActivity implements OnChainlistener {
 
     private FirebaseDatabase database;
     private DatabaseReference dbReference;
-    private List<Chain> crimeList;
-    private List<Chapters> chapters = new ArrayList<>();
+    private List<Chain> genreList;
     private FirebaseUser user;
     private FirebaseAuth auth;
     private Chain chain;
     private FloatingActionButton fab;
+    private String genreTitle;
+
     private ChainAdapter chainAdapter;
     private RecyclerView recyclerView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_crime);
+        setContentView(R.layout.activity_chain_titles_recycler);
         fab = findViewById(R.id.floatingActionButton);
         recyclerView = findViewById(R.id.recycler_view);
         database = FirebaseDatabase.getInstance();
@@ -55,17 +61,35 @@ public class CrimeActivity extends AppCompatActivity implements OnChainlistener 
         user = auth.getCurrentUser();
         dbReference = database.getReference().child(user.getUid()).child("Chain");
         chain = new Chain();
-        crimeList = new ArrayList<>();
-        crimeList = (List<Chain>) getIntent().getExtras().getSerializable(Chain.CRIME);
+        genreList = new ArrayList<>();
+
+        genreTitle = getIntent().getStringExtra("genre");
+
+        genreList = (List<Chain>) getIntent().getExtras().getSerializable(genreTitle);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createDialog(getApplicationContext());
-
-
             }
         });
+
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                chain = genreList.get(position);
+                String chainID = chain.getChainID();
+
+                Intent intent = new Intent(SingleGenreActivity.this, ChapterInfoActivity.class);
+                intent.putExtra("chainID", chainID);
+                intent.putExtra("chapterNumber", 0);
+                intent.putExtra("chapterGenre", genreTitle);
+                startActivity(intent);
+            }
+
+            public void onLongClick(View view, int position) {
+            }
+        }));
 
     }
 
@@ -81,11 +105,12 @@ public class CrimeActivity extends AppCompatActivity implements OnChainlistener 
         super.onResume();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        chainAdapter = new ChainAdapter(getApplicationContext(), crimeList, this);
+        chainAdapter = new ChainAdapter(getApplicationContext(), genreList, this);
         recyclerView.setAdapter(chainAdapter);
         chainAdapter.notifyDataSetChanged();
 
     }
+
 
     public void createDialog(Context context) {
         final AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();
@@ -95,10 +120,14 @@ public class CrimeActivity extends AppCompatActivity implements OnChainlistener 
         final EditText title = dialogView.findViewById(R.id.edt_title);
         final EditText author = dialogView.findViewById(R.id.edt_author);
         final EditText desc = dialogView.findViewById(R.id.edt_desc);
-        final EditText dateCreated = dialogView.findViewById(R.id.edt_date_created);
-        final EditText genre = dialogView.findViewById(R.id.edt_genre);
-        Button button1 = dialogView.findViewById(R.id.buttonSubmit);
+        final TextView dateCreated = dialogView.findViewById(R.id.edt_date_created);
+        final TextView genre = dialogView.findViewById(R.id.edt_genre);
+        Button button1 = dialogView.findViewById(R.id.buttonDelete);
 
+        String date_today = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(new Date());
+
+        genre.setText(genreTitle);
+        dateCreated.setText(date_today);
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +136,7 @@ public class CrimeActivity extends AppCompatActivity implements OnChainlistener 
                 String authorName = author.getText().toString();
                 String description = desc.getText().toString();
                 String date = dateCreated.getText().toString();
-                String genreName = "Crime";
+                String genreName = genre.getText().toString();
 
                 chain.setChainName(titleName);
                 chain.setChainAuthor(authorName);
@@ -115,8 +144,11 @@ public class CrimeActivity extends AppCompatActivity implements OnChainlistener 
                 chain.setDateCreated(date);
                 chain.setChainGenre(genreName);
                 Utils.saveDataToFirebase(chain, dbReference);
+
+                //onBackPressed();
+                chainAdapter.notifyDataSetChanged();
                 dialogBuilder.dismiss();
-                onBackPressed();
+
             }
         });
 
@@ -127,6 +159,6 @@ public class CrimeActivity extends AppCompatActivity implements OnChainlistener 
 
     @Override
     public void onChainClick(final int position) {
-        Toast.makeText(getApplicationContext(), "Position is " + crimeList.get(position).getChainID(), Toast.LENGTH_SHORT).show();
     }
+
 }

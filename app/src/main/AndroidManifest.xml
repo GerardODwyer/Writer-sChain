@@ -11,20 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChainInfoActivity"></activity>
-        <activity android:name=".FantasyActivity" />
-        <activity android:name=".FairytaleActivity" />
-        <activity android:name=".FanficActivity" />
-        <activity android:name=".DramaActivity" />
-        <activity android:name=".AdventureActivity" />
-        <activity android:name=".ActionActivity" />
+        <activity android:name=".ChapterInfoActivity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".MysteryActivity" />
-        <activity android:name=".TradgeyActivity" />
-        <activity android:name=".WesternActivity" />
-        <activity android:name=".CrimeActivity" />
         <activity android:name=".Genre2Activity" />
-        <activity android:name=".ComedyActivity" />
+        <activity android:name=".SingleGenreActivity" />
         <activity android:name=".ui.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,13 +24,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ChainRecyclerView" />
-        <activity android:name=".MainActivity" />
         <activity android:name=".GenreActivity" />
         <activity android:name=".utils.Help" />
-        <activity android:name=".ui.login.HorrorActivity" />
-        <activity android:name=".ui.login.LoveActivity" />
-        <activity android:name=".ui.login.MedevilActivity" />
-        <activity android:name=".ui.login.ScifiActivity" />
     </application>
 
 </manifest>

@@ -1,8 +1,6 @@
 package com.example.writerchainapp.Constructors;
 
 
-import com.example.writerchainapp.data.model.Chapters;
-
 import java.io.Serializable;
 import java.util.List;
 

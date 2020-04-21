@@ -8,26 +8,24 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.writerchainapp.Constructors.Chain;
+import com.example.writerchainapp.Constructors.Chapters;
 import com.example.writerchainapp.R;
-
 
 import java.util.List;
 
 
+public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ViewHolder> {
 
-public class ChainAdapter extends RecyclerView.Adapter<ChainAdapter.ViewHolder> {
-
-    private OnChainlistener mListener;
-    private List<Chain> chainsList;
+    private OnChapterslistener mListener;
+    private List<Chapters> chaptersList;
 
     LayoutInflater layoutInflater;
 
 
     // data is passed into the constructor
-    public ChainAdapter(Context context, List<Chain> chainsList, OnChainlistener listener) {
+    public ChapterAdapter(Context context, List<Chapters> chaptersList, OnChapterslistener listener) {
         this.layoutInflater = LayoutInflater.from(context);
-        this.chainsList = chainsList;
+        this.chaptersList = chaptersList;
         this.mListener = listener;
     }
 
@@ -45,21 +43,17 @@ public class ChainAdapter extends RecyclerView.Adapter<ChainAdapter.ViewHolder> 
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        Chain chain = chainsList.get(position);
-        holder.textChainTitle.setText(chain.getChainName());
-        holder.textChainAuthor.setText(chain.getChainAuthor());
-        holder.textChainDesc.setText(chain.getChainDescription());
-        holder.textChainDate.setText(chain.getDateCreated());
-        holder.textChainGenre.setText(chain.getChainGenre());
-//        holder.text_ChainChapterCount.setText(chain.getChapterCount());
-//        holder.text_ChainUpvotes.setText(chain.getChainUpvotes());
+        Chapters chapters = chaptersList.get(position);
+        holder.textChainTitle.setText(chapters.getChapterName());
+        holder.textChainAuthor.setText(chapters.getChapterAuthor());
+        holder.textChainDate.setText(chapters.getDateCreated());
 
     }
 
     // total number of rows
     @Override
     public int getItemCount() {
-        return chainsList.size();
+        return chaptersList.size();
     }
 
 
@@ -68,36 +62,31 @@ public class ChainAdapter extends RecyclerView.Adapter<ChainAdapter.ViewHolder> 
 
 
         TextView textChainTitle;
-        TextView textChainDesc;
         TextView textChainAuthor;
         TextView textChainDate;
-        TextView textChainGenre;
-        TextView textChainChapterCount;
-        TextView textChainUpvotes;
-        OnChainlistener mChainlistener;
+        TextView textGenre;
+        OnChapterslistener mChapterslistener;
 
 
-        ViewHolder(View itemView, OnChainlistener chainlistener) {
+        ViewHolder(View itemView,  OnChapterslistener chapterlistener) {
             super(itemView);
             textChainTitle = itemView.findViewById(R.id.chain_title);
             textChainAuthor = itemView.findViewById(R.id.chain_author);
-            textChainDesc = itemView.findViewById(R.id.chain_desc);
             textChainDate = itemView.findViewById(R.id.chain_datecreated);
-            textChainGenre = itemView.findViewById(R.id.chain_genre);
-//            text_ChainChapterCount = itemView.findViewById(R.id.chain_chaptercount);
-//            text_ChainUpvotes = itemView.findViewById(R.id.chain_upvotes);
-            this.mChainlistener = chainlistener;
+            textGenre = itemView.findViewById(R.id.textView3);
+            textGenre.setVisibility(itemView.GONE);
+            this.mChapterslistener = chapterlistener;
             itemView.setOnClickListener(this);
 
         }
 
         @Override
         public void onClick(View view) {
-            mChainlistener.onChainClick(getAdapterPosition());
+            mChapterslistener.onChaptersClick(getAdapterPosition());
         }
     }
 
-    public interface OnChainlistener{
-        void onChainClick(int position);
+    public interface OnChapterslistener{
+        void onChaptersClick(int position);
     }
 }

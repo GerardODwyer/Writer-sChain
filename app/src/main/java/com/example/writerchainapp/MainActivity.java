@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.writerchainapp.Constructors.Chain;
-import com.example.writerchainapp.data.model.Chapters;
+import com.example.writerchainapp.Constructors.Chapters;
 import com.example.writerchainapp.utils.Help;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     private List<Chapters> chapters = new ArrayList<>();
     private FirebaseUser user;
     private FirebaseAuth auth;
-    private Chain chain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,18 +49,12 @@ public class MainActivity extends AppCompatActivity {
         user = auth.getCurrentUser();
 
         setupVariables();
-        chain = new Chain();
-
-
-
-
 
         imageProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-                MainActivity.this.startActivity(intent);
-
+                startActivity(intent);
             }
         });
 
@@ -70,8 +63,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, GenreActivity.class);
-                MainActivity.this.startActivity(intent);
-
+                startActivity(intent);
             }
         });
 
@@ -79,8 +71,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Help.class);
-                MainActivity.this.startActivity(intent);
-
+                startActivity(intent);
             }
         });
 
@@ -92,12 +83,10 @@ public class MainActivity extends AppCompatActivity {
         imageProfile = findViewById(R.id.image_profile);
         imageGenre = findViewById(R.id.image_genre);
         imageHelp = findViewById(R.id.image_help);
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
     }
 }
