@@ -9,6 +9,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -42,7 +44,7 @@ public class ChapterInfoActivity extends AppCompatActivity implements ChapterAda
     private int chapterIncrease = 1;
     private int chapterNo;
     private String chapterSearch;
-    private List<Chapters> chapterList = new ArrayList<>();
+    private ArrayList<Chapters> chapterList = new ArrayList<>();
     private FloatingActionButton fab;
     private TextView textChainTitle;
     private TextView textChainDesc;
@@ -58,6 +60,7 @@ public class ChapterInfoActivity extends AppCompatActivity implements ChapterAda
     private Chain chain;
     private Chapters chapters;
     private String position;
+    EditText search;
 
     private RecyclerView recyclerView;
     private ChapterAdapter chapterAdapter;
@@ -70,6 +73,7 @@ public class ChapterInfoActivity extends AppCompatActivity implements ChapterAda
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
+        search = findViewById(R.id.search_chapters);
 
         chapters = new Chapters();
         chapterNo = getIntent().getIntExtra("chapterNumber", 0);
@@ -190,6 +194,24 @@ public class ChapterInfoActivity extends AppCompatActivity implements ChapterAda
         recyclerView.setAdapter(chapterAdapter);
         chapterAdapter.notifyDataSetChanged();
 
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filterList(s.toString());
+
+            }
+        });
+
     }
 
     public void createPopUp(final Context context, int position) {
@@ -266,5 +288,15 @@ public class ChapterInfoActivity extends AppCompatActivity implements ChapterAda
     @Override
     public void onChaptersClick(int position) {
 
+    }
+
+    public void  filterList(String text){
+        ArrayList<Chapters> chapters = new ArrayList<>();
+        for (Chapters chapter : chapterList){
+            if (chapter.getChapterName().toLowerCase().contains(text.toLowerCase())){
+                chapters.add(chapter);
+                chapterAdapter.filterList(chapters);
+            }
+        }
     }
 }

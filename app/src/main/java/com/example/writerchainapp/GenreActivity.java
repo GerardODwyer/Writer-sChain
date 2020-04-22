@@ -262,4 +262,15 @@ public class GenreActivity extends AppCompatActivity {
         arrowright = findViewById(R.id.arrowrightP1);
         arrowleft = findViewById(R.id.arrowleftP1);
     }
+//
+//    @Override
+//    protected void onNewIntent(Intent intent) {
+//        super.onNewIntent(intent);
+//        if(intent.getStringExtra("refreshChains").equals("refreshChains")){
+//            intent = new Intent(GenreActivity.this, SingleGenreActivity.class);
+//            startActivity(intent);
+//        }
+//    }
+
 }
+

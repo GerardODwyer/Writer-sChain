@@ -11,19 +11,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.writerchainapp.Constructors.Chapters;
 import com.example.writerchainapp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ViewHolder> {
 
     private OnChapterslistener mListener;
-    private List<Chapters> chaptersList;
+    private ArrayList<Chapters> chaptersList;
 
     LayoutInflater layoutInflater;
 
 
     // data is passed into the constructor
-    public ChapterAdapter(Context context, List<Chapters> chaptersList, OnChapterslistener listener) {
+    public ChapterAdapter(Context context, ArrayList<Chapters> chaptersList, OnChapterslistener listener) {
         this.layoutInflater = LayoutInflater.from(context);
         this.chaptersList = chaptersList;
         this.mListener = listener;
@@ -55,6 +56,13 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ViewHold
     public int getItemCount() {
         return chaptersList.size();
     }
+
+
+    public void filterList( ArrayList<Chapters> chapterList){
+        this.chaptersList = chapterList;
+        notifyDataSetChanged();
+    }
+
 
 
     // stores and recycles views as they are scrolled off screen

@@ -45,6 +45,7 @@ public class SingleGenreActivity extends AppCompatActivity implements OnChainlis
     private FirebaseAuth auth;
     private Chain chain;
     private FloatingActionButton fab;
+    private FloatingActionButton fabRefresh;
     private String genreTitle;
 
     private ChainAdapter chainAdapter;
@@ -55,6 +56,7 @@ public class SingleGenreActivity extends AppCompatActivity implements OnChainlis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chain_titles_recycler);
         fab = findViewById(R.id.floatingActionButton);
+        fabRefresh = findViewById(R.id.floatingActionButton2);
         recyclerView = findViewById(R.id.recycler_view);
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
@@ -67,10 +69,20 @@ public class SingleGenreActivity extends AppCompatActivity implements OnChainlis
 
         genreList = (List<Chain>) getIntent().getExtras().getSerializable(genreTitle);
 
+
+
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createDialog(getApplicationContext());
+            }
+        });
+
+        fabRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
@@ -97,7 +109,6 @@ public class SingleGenreActivity extends AppCompatActivity implements OnChainlis
     protected void onStart() {
         super.onStart();
 
-
     }
 
     @Override
@@ -110,6 +121,13 @@ public class SingleGenreActivity extends AppCompatActivity implements OnChainlis
         chainAdapter.notifyDataSetChanged();
 
     }
+
+//    public void refreshChains() {
+//
+//        Intent intent = new Intent(SingleGenreActivity.this, GenreActivity.class);
+//        intent.putExtra("refreshChains","refreshChains");
+//        startActivity(intent);
+//    }
 
 
     public void createDialog(Context context) {
@@ -148,6 +166,8 @@ public class SingleGenreActivity extends AppCompatActivity implements OnChainlis
                 //onBackPressed();
                 chainAdapter.notifyDataSetChanged();
                 dialogBuilder.dismiss();
+
+                finish();
 
             }
         });
