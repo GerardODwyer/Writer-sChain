@@ -3,6 +3,7 @@ package com.example.writerchainapp;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,11 +11,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.writerchainapp.Adapters.ChainAdapter;
 import com.example.writerchainapp.Constructors.Chain;
@@ -30,6 +32,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -69,8 +73,10 @@ public class SingleGenreActivity extends AppCompatActivity implements OnChainlis
 
         genreList = (List<Chain>) getIntent().getExtras().getSerializable(genreTitle);
 
-
-
+        if (genreList != null) {
+            Collections.sort(genreList);
+            Collections.reverse(genreList);
+        }
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,4 +187,37 @@ public class SingleGenreActivity extends AppCompatActivity implements OnChainlis
     public void onChainClick(final int position) {
     }
 
+    public void  filterList(String text){
+        ArrayList<Chain> genres = new ArrayList<>();
+        for (Chain genre : genreList){
+            if (genre.getChainName().toLowerCase().contains(text.toLowerCase())){
+                genres.add(genre);
+                chainAdapter.filterList(genres);
+            }
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_genre, menu);
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setMaxWidth(android.R.attr.width);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // TODO
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(final String query) {
+                filterList(query);
+                return true;
+            }
+        });
+
+        return true;
+    }
 }

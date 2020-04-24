@@ -12,6 +12,7 @@ import com.example.writerchainapp.Constructors.Chain;
 import com.example.writerchainapp.R;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -99,5 +100,10 @@ public class ChainAdapter extends RecyclerView.Adapter<ChainAdapter.ViewHolder> 
 
     public interface OnChainlistener{
         void onChainClick(int position);
+    }
+
+    public void filterList( ArrayList<Chain> chainsList){
+        this.chainsList = chainsList;
+        notifyDataSetChanged();
     }
 }

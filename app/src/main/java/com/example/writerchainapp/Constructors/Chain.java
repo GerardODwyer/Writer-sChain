@@ -2,9 +2,13 @@ package com.example.writerchainapp.Constructors;
 
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
-public class Chain implements Serializable {
+public class Chain implements Serializable, Comparable<Chain> {
     public static final String COMDEY = "COMDEY";
     public static final String HORROR = "HORROR";
     public static final String LOVE = "LOVE";
@@ -119,5 +123,37 @@ public class Chain implements Serializable {
 
     public void setChainUpvotes(String chainUpvotes) {
         this.chainUpvotes = chainUpvotes;
+    }
+
+    @Override
+    public String toString() {
+        return "Chain{" +
+                "chainName='" + chainName + '\'' +
+                ", chainID='" + chainID + '\'' +
+                ", chainAuthor='" + chainAuthor + '\'' +
+                ", chainDescription='" + chainDescription + '\'' +
+                ", dateCreated='" + dateCreated + '\'' +
+                ", chainGenre='" + chainGenre + '\'' +
+                ", chapterCount=" + chapterCount +
+                ", chaptersList=" + chaptersList +
+                ", chainUpvotes='" + chainUpvotes + '\'' +
+                '}';
+    }
+
+
+    @Override
+    public int compareTo(Chain chain) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+        Date date1 = null;
+        Date date2 = null;
+
+        try {
+            date1 = dateFormat.parse(getDateCreated());
+            date2 = dateFormat.parse(chain.getDateCreated());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return date1 != null ? date1.compareTo(date2) : 0;
     }
 }
