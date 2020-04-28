@@ -30,6 +30,7 @@ public class Chain implements Serializable, Comparable<Chain> {
     private String chainName;
     private String chainID;
     private String chainAuthor;
+    private String chainAuthorID;
     private String chainDescription;
     private String dateCreated;
     private String chainGenre;
@@ -37,11 +38,12 @@ public class Chain implements Serializable, Comparable<Chain> {
     private List<Chapters> chaptersList;
     private String chainUpvotes;
 
-    public Chain(String chainName, String chainID, String chainAuthor, String chainDescription,
+    public Chain(String chainName, String chainID, String chainAuthor, String chainAuthorID, String chainDescription,
                  String chainGenre, int chapterCount, String chainUpvotes, List<Chapters> chapters) {
         this.chainName = chainName;
         this.chainID = chainID;
         this.chainAuthor = chainAuthor;
+        this.chainAuthorID = chainAuthorID;
         this.chainDescription = chainDescription;
         this.chainGenre = chainGenre;
         this.chapterCount = chapterCount;
@@ -52,6 +54,8 @@ public class Chain implements Serializable, Comparable<Chain> {
     public Chain() {
 
     }
+
+
 
     public List<Chapters> getChaptersList() {
         return chaptersList;
@@ -125,12 +129,21 @@ public class Chain implements Serializable, Comparable<Chain> {
         this.chainUpvotes = chainUpvotes;
     }
 
+    public String getChainAuthorID() {
+        return chainAuthorID;
+    }
+
+    public void setChainAuthorID(String chainAuthorID) {
+        this.chainAuthorID = chainAuthorID;
+    }
+
     @Override
     public String toString() {
         return "Chain{" +
                 "chainName='" + chainName + '\'' +
                 ", chainID='" + chainID + '\'' +
                 ", chainAuthor='" + chainAuthor + '\'' +
+                ", chainAuthorID='" + chainAuthorID + '\'' +
                 ", chainDescription='" + chainDescription + '\'' +
                 ", dateCreated='" + dateCreated + '\'' +
                 ", chainGenre='" + chainGenre + '\'' +
@@ -139,7 +152,6 @@ public class Chain implements Serializable, Comparable<Chain> {
                 ", chainUpvotes='" + chainUpvotes + '\'' +
                 '}';
     }
-
 
     @Override
     public int compareTo(Chain chain) {

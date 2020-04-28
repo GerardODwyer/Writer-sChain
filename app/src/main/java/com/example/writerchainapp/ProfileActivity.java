@@ -1,5 +1,6 @@
 package com.example.writerchainapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,9 +9,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.writerchainapp.Constructors.Chain;
+import com.example.writerchainapp.Constructors.Users;
 import com.example.writerchainapp.ui.login.LoginActivity;
+import com.example.writerchainapp.utils.Utils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -18,6 +22,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -29,10 +34,13 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseUser user;
     private FirebaseAuth auth;
     private TextView chainCount;
+    private TextView chapterCount;
     private DataSnapshot dataSnapshot;
     private long longChainCount;
     private String strChainCount;
     private ImageView signout;
+    private TextView username;
+    private Users users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +49,13 @@ public class ProfileActivity extends AppCompatActivity {
 
         signout = findViewById(R.id.image_bookmark);
         chainCount = findViewById(R.id.text_ChainCount);
+        chapterCount = findViewById(R.id.text_ChapterCount);
+        username = findViewById(R.id.username);
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-        dbReference = database.getReference().child(user.getUid());
-        getChainCount();
+        dbReference = database.getReference().child("Users").child(user.getUid());
+        getChainInfo(dbReference);
 
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,42 +68,27 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    public void getChainCount() {
 
-        dbReference.addChildEventListener(new ChildEventListener() {
+    public void getChainInfo(DatabaseReference dbReference) {
+
+        dbReference.addValueEventListener(new ValueEventListener() {
+
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Log.e(dataSnapshot.getKey(),dataSnapshot.getChildrenCount() + "");
-
-                longChainCount = dataSnapshot.getChildrenCount();
-
-                strChainCount = Long.toString(longChainCount);
-
-                chainCount.setText(strChainCount);
-
-                chainCount = findViewById(R.id.text_ChainCount);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Users users = dataSnapshot.getValue(Users.class);
+                String chainNumber = String.valueOf(users.getUserChainCount());
+                String chapterNumber = String.valueOf(users.getUserChapterCount());
+                chainCount.setText(chainNumber);
+                chapterCount.setText(chapterNumber);
+                username.setText(users.getUserDisplayName());
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
 
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
         });
-
     }
+
 }

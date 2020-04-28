@@ -31,7 +31,8 @@ public class  LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser user;
-    Button register;
+    private Button register;
+    private ProgressBar loadingProgressBar;
 
 
     @Override
@@ -41,7 +42,7 @@ public class  LoginActivity extends AppCompatActivity {
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
-        final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+        loadingProgressBar = findViewById(R.id.loading);
         register = findViewById(R.id.register);
 
         mAuth = FirebaseAuth.getInstance();
@@ -87,8 +88,8 @@ public class  LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
-                login(email, password);
                 loadingProgressBar.setVisibility(View.VISIBLE);
+                login(email, password);
             }
         });
 
@@ -112,6 +113,7 @@ public class  LoginActivity extends AppCompatActivity {
                             finish();
                         } else {
                             Toast.makeText(getApplicationContext(), "Email or password is wrong \n try again", Toast.LENGTH_LONG).show();
+                            loadingProgressBar.setVisibility(View.GONE);
                         }
                     }
                 });

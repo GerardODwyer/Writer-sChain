@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import com.example.writerchainapp.Adapters.ChapterAdapter;
 import com.example.writerchainapp.Adapters.RecyclerTouchListener;
 import com.example.writerchainapp.Constructors.Chain;
 import com.example.writerchainapp.Constructors.Chapters;
+import com.example.writerchainapp.Constructors.Users;
 import com.example.writerchainapp.utils.Utils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,11 +33,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.UUID;
 
 
@@ -45,23 +49,29 @@ public class ChapterInfoActivity extends AppCompatActivity implements ChapterAda
     private int chapterNo;
     private String chapterSearch;
     private ArrayList<Chapters> chapterList = new ArrayList<>();
+    private ArrayList<Chapters> chapterListFull = new ArrayList<>();
     private FloatingActionButton fab;
     private TextView textChainTitle;
+    private TextView chapterTitleNumber;
     private TextView textChainDesc;
     private TextView textChainAuthor;
     private TextView textChainDate;
     private TextView textChainGenre;
     private TextView textChapterNumber;
     private FirebaseDatabase database;
-    private DatabaseReference dbReference;
+    private DatabaseReference chainReference;
+    private DatabaseReference usersReference;
     private DatabaseReference chapterReference;
     private FirebaseUser user;
     private FirebaseAuth auth;
     private Chain chain;
-    private Chapters chapters;
-    private String position;
-    EditText search;
+    private String chapterID;
+//    private Chapters newChapter;
+    private EditText search;
+    private Users users;
 
+    private String chapterFKID;
+//    private String descTest;
     private RecyclerView recyclerView;
     private ChapterAdapter chapterAdapter;
 
@@ -70,36 +80,46 @@ public class ChapterInfoActivity extends AppCompatActivity implements ChapterAda
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chapter_info);
+        recyclerView = findViewById(R.id.recycler_view);
+
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
         search = findViewById(R.id.search_chapters);
+        chapterTitleNumber = findViewById(R.id.chapterTitleMain);
 
-        chapters = new Chapters();
+        //chapterList.clear();
+
+//        chapters = new Chapters();
         chapterNo = getIntent().getIntExtra("chapterNumber", 0);
         chapterNo = chapterNo + chapterIncrease;
         chapterSearch = String.valueOf(chapterNo);
+        search.setHint("Search Chapter " + chapterSearch);
 
         final String chainId = getIntent().getStringExtra("chainID");
         final String chapterGenre = getIntent().getStringExtra("chapterGenre");
 
-        recyclerView = findViewById(R.id.recycler_view);
-
         fab = findViewById(R.id.floatingActionButton2);
-        position = getIntent().getStringExtra("position");
+        chapterID = getIntent().getStringExtra("chapterID");
 
-        dbReference = database.getReference().child(user.getUid()).child("Chain").child(chainId);
+        chainReference = database.getReference().child("Chains").child(chainId);
+        chapterReference = database.getReference().child("Chains").child(chainId).child("chapters").child(chapterSearch);
+        usersReference = database.getReference().child("Users").child(user.getUid());
 
         if (chapterNo == 1) {
-            chapterList.clear();
-            dbReference.addValueEventListener(new ValueEventListener() {
+            chapterTitleNumber.setVisibility(View.GONE);
+            chainReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    chain = dataSnapshot.getValue(Chain.class);
-                    textChainTitle.setText(chain.getChainName());
-                    textChainAuthor.setText(chain.getChainAuthor());
-                    textChainDesc.setText(chain.getChainDescription());
-                    textChainDate.setText(chain.getDateCreated());
+                    try {
+                        chain = dataSnapshot.getValue(Chain.class);
+                        textChainTitle.setText(chain.getChainName());
+                        textChainAuthor.setText(chain.getChainAuthor());
+                        textChainDesc.setText(chain.getChainDescription());
+                        textChainDate.setText(chain.getDateCreated());
+                    } catch (Exception ignored) {
+                        Toast.makeText(ChapterInfoActivity.this, "Deleting...", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
                 @Override
@@ -108,18 +128,30 @@ public class ChapterInfoActivity extends AppCompatActivity implements ChapterAda
                 }
             });
         } else {
-            chapterList.clear();
-            int newSearch = chapterNo - 1;
-            String newString = String.valueOf(newSearch);
-            dbReference = dbReference.child("chapters").child(newString).child(position);
-            dbReference.addValueEventListener(new ValueEventListener() {
+            chapterTitleNumber.setVisibility(View.VISIBLE);
+            int newChapterNumber = Integer.parseInt(chapterSearch);
+            newChapterNumber = newChapterNumber - 1;
+            chapterTitleNumber.setText("Reading Chapter " + newChapterNumber);
+            String newSearch = String.valueOf(newChapterNumber);
+            chainReference = database.getReference().child("Chains").child(chainId).child("chapters").child(newSearch);
+            chainReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    Chapters newChapter = dataSnapshot.getValue(Chapters.class);
-                    textChainTitle.setText(newChapter.getChapterName());
-                    textChainAuthor.setText(newChapter.getChapterAuthor());
-                    textChainDesc.setText(newChapter.getChapterDescription());
-                    textChainDate.setText(newChapter.getDateCreated());
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Chapters newChapter = snapshot.getValue(Chapters.class);
+                        if (newChapter.getChapterFKID().equals(chapterID)) {
+                            try {
+                                chapterFKID = newChapter.getChapterFKID();
+//                                descTest = newChapter.getChapterDescription();
+                                textChainTitle.setText(newChapter.getChapterName());
+                                textChainAuthor.setText(newChapter.getChapterAuthor());
+                                textChainDesc.setText(newChapter.getChapterDescription());
+                                textChainDate.setText(newChapter.getDateCreated());
+                            } catch (Exception ignored) {
+                                Toast.makeText(ChapterInfoActivity.this, "Deleting...", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
                 }
 
                 @Override
@@ -128,11 +160,9 @@ public class ChapterInfoActivity extends AppCompatActivity implements ChapterAda
                 }
             });
 
-            dbReference = database.getReference().child(user.getUid()).child("Chain").child(chainId);
+            chainReference = database.getReference().child("Chains").child(chainId);
 
         }
-
-        chapterReference = database.getReference().child(user.getUid()).child("Chain").child(chainId).child("chapters").child(chapterSearch);
 
         textChainTitle = findViewById(R.id.chain_title);
         textChainAuthor = findViewById(R.id.chain_author);
@@ -143,14 +173,20 @@ public class ChapterInfoActivity extends AppCompatActivity implements ChapterAda
 
         textChapterNumber.setText("Chapter " + chapterSearch);
 
-        chapterList.clear();
-
         chapterReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                chapterList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Chapters newChapter = snapshot.getValue(Chapters.class);
-                    chapterList.add(newChapter);
+                    if (chapterNo == 1) {
+                        chapterList.add(newChapter);
+                    } else {
+                        if (newChapter.getChapterID().equals(chapterFKID)) {
+                            chapterList.add(newChapter);
+                        }
+                    }
+                    chapterListFull.add(newChapter);
                 }
             }
 
@@ -169,19 +205,39 @@ public class ChapterInfoActivity extends AppCompatActivity implements ChapterAda
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                chapters = chapterList.get(position);
-                String pos = String.valueOf(position);
+                Chapters chapters = chapterList.get(position);
+//                Toast.makeText(ChapterInfoActivity.this, chapters.getChapterID(), Toast.LENGTH_SHORT).show();
+//                String pos = String.valueOf(position);
                 Intent intent = new Intent(ChapterInfoActivity.this, ChapterInfoActivity.class);
                 intent.putExtra("chapterNumber", chapterNo);
                 intent.putExtra("chainID", chainId);
-                intent.putExtra("position", pos);
+                intent.putExtra("chapterID", chapters.getChapterFKID());
                 startActivity(intent);
             }
 
             public void onLongClick(View view, int position) {
-                createPopUp(getApplicationContext(), position);
+                Chapters chapters = chapterList.get(position);
+                if (users.isUserAdmin()) {
+                    createAdminPopUp(getApplicationContext(), position);
+                } else if (users.getUserID().equals(chapters.getChapterAuthorID())) {
+                    createEditPopUp(getApplicationContext(), position);
+                }
             }
         }));
+
+        usersReference.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                users = dataSnapshot.getValue(Users.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
 
     }
 
@@ -193,6 +249,7 @@ public class ChapterInfoActivity extends AppCompatActivity implements ChapterAda
         chapterAdapter = new ChapterAdapter(getApplicationContext(), chapterList, this);
         recyclerView.setAdapter(chapterAdapter);
         chapterAdapter.notifyDataSetChanged();
+
 
         search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -214,10 +271,7 @@ public class ChapterInfoActivity extends AppCompatActivity implements ChapterAda
 
     }
 
-    public void createPopUp(final Context context, int position) {
-        chapters = chapterList.get(position);
-        String pos = String.valueOf(position);
-
+    public void createAdminPopUp(final Context context, final int position) {
         final AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.delete_dialog, null);
@@ -227,9 +281,59 @@ public class ChapterInfoActivity extends AppCompatActivity implements ChapterAda
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                chapterList.remove(position);
+                Utils.saveChaptersToFirebase(chapterList, chainReference, chapterSearch);
+                Utils.decreaseUserChapterInfo(usersReference, users);
+                chapterAdapter.notifyDataSetChanged();
+                finish();
+                startActivity(getIntent());
+                dialogBuilder.dismiss();
+            }
+        });
 
-                Toast.makeText(getApplicationContext(), "Tsting", Toast.LENGTH_SHORT).show();
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.show();
+    }
 
+    @SuppressLint("SetTextI18n")
+    public void createEditPopUp(final Context context, final int position) {
+        final Chapters chapters = chapterList.get(position);
+
+        final AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.chapter_dialog_layout, null);
+
+        final EditText title = dialogView.findViewById(R.id.edt_title);
+        final TextView author = dialogView.findViewById(R.id.edt_author);
+        final TextView boxTitle = dialogView.findViewById(R.id.dialogTitle);
+        final EditText desc = dialogView.findViewById(R.id.edt_desc);
+        final TextView dateCreated = dialogView.findViewById(R.id.edt_date_created);
+        Button button1 = dialogView.findViewById(R.id.buttonDelete);
+
+        String date_today = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(new Date());
+
+        dateCreated.setText(date_today);
+        author.setText(users.getUserDisplayName());
+        button1.setText("Edit Chapter");
+        boxTitle.setText("Edit The Chapter In The Box Below!");
+        title.setText(chapters.getChapterName());
+        desc.setText(chapters.getChapterDescription());
+
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String titleName = title.getText().toString();
+                String description = desc.getText().toString();
+                String date = dateCreated.getText().toString();
+                String genreName = chapters.getChapterGenre();
+                chapters.setChapterID(chapters.getChapterID());
+                chapters.setChapterAuthor(users.getUserDisplayName());
+                chapters.setChapterAuthorID(users.getUserID());
+                chapters.setChapterName(titleName);
+                chapters.setChapterDescription(description);
+                chapters.setDateCreated(date);
+                chapters.setChapterGenre(genreName);
+                chainReference.child("chapters").child(chapterSearch).child(String.valueOf(position)).setValue(chapters);
                 chapterAdapter.notifyDataSetChanged();
                 dialogBuilder.dismiss();
 
@@ -244,9 +348,9 @@ public class ChapterInfoActivity extends AppCompatActivity implements ChapterAda
         final AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.chapter_dialog_layout, null);
-
+        final Chapters chapters = new Chapters();
         final EditText title = dialogView.findViewById(R.id.edt_title);
-        final EditText author = dialogView.findViewById(R.id.edt_author);
+        final TextView author = dialogView.findViewById(R.id.edt_author);
         final EditText desc = dialogView.findViewById(R.id.edt_desc);
         final TextView dateCreated = dialogView.findViewById(R.id.edt_date_created);
         Button button1 = dialogView.findViewById(R.id.buttonDelete);
@@ -254,27 +358,33 @@ public class ChapterInfoActivity extends AppCompatActivity implements ChapterAda
         String date_today = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(new Date());
 
         dateCreated.setText(date_today);
+        author.setText(users.getUserDisplayName());
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String titleName = title.getText().toString();
-                String authorName = author.getText().toString();
                 String description = desc.getText().toString();
                 String date = dateCreated.getText().toString();
                 String genreName = chapterGenre;
-
-                String uuid = UUID.randomUUID().toString();
+                String uuid;
+                if (chapterNo == 1) {
+                    uuid = UUID.randomUUID().toString();
+                } else {
+                    uuid = chapterFKID;
+                }
+                String FKID = UUID.randomUUID().toString();
                 chapters.setChapterID(uuid);
-                chapters.setChapterAuthor(authorName);
+                chapters.setChapterFKID(FKID);
+                chapters.setChapterAuthor(users.getUserDisplayName());
+                chapters.setChapterAuthorID(users.getUserID());
                 chapters.setChapterName(titleName);
                 chapters.setChapterDescription(description);
                 chapters.setDateCreated(date);
                 chapters.setChapterGenre(genreName);
-                chapterList.add(chapters);
-                Utils.saveChaptersToFirebase(chapterList, dbReference, chapterSearch);
-
-                //onBackPressed();
+                chapterListFull.add(chapters);
+                Utils.saveChaptersToFirebase(chapterListFull, chainReference, chapterSearch);
+                Utils.increaseUserChapterInfo(usersReference, users);
                 chapterAdapter.notifyDataSetChanged();
                 dialogBuilder.dismiss();
 
@@ -290,10 +400,10 @@ public class ChapterInfoActivity extends AppCompatActivity implements ChapterAda
 
     }
 
-    public void  filterList(String text){
+    public void filterList(String text) {
         ArrayList<Chapters> chapters = new ArrayList<>();
-        for (Chapters chapter : chapterList){
-            if (chapter.getChapterName().toLowerCase().contains(text.toLowerCase())){
+        for (Chapters chapter : chapterList) {
+            if (chapter.getChapterName().toLowerCase().contains(text.toLowerCase())) {
                 chapters.add(chapter);
                 chapterAdapter.filterList(chapters);
             }

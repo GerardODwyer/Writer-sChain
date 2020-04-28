@@ -1,6 +1,7 @@
 package com.example.writerchainapp;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -17,19 +18,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.writerchainapp.Adapters.ChainAdapter;
 import com.example.writerchainapp.Constructors.Chain;
 import com.example.writerchainapp.Adapters.ChainAdapter.OnChainlistener;
 
+import com.example.writerchainapp.Constructors.Users;
 import com.example.writerchainapp.utils.Utils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,11 +45,13 @@ import java.util.List;
 import java.util.Locale;
 
 import com.example.writerchainapp.Adapters.RecyclerTouchListener;
+import com.google.firebase.database.ValueEventListener;
 
 public class SingleGenreActivity extends AppCompatActivity implements OnChainlistener {
 
     private FirebaseDatabase database;
     private DatabaseReference dbReference;
+    private DatabaseReference userReference;
     private List<Chain> genreList;
     private FirebaseUser user;
     private FirebaseAuth auth;
@@ -51,6 +59,7 @@ public class SingleGenreActivity extends AppCompatActivity implements OnChainlis
     private FloatingActionButton fab;
     private FloatingActionButton fabRefresh;
     private String genreTitle;
+    private Users users;
 
     private ChainAdapter chainAdapter;
     private RecyclerView recyclerView;
@@ -65,7 +74,8 @@ public class SingleGenreActivity extends AppCompatActivity implements OnChainlis
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-        dbReference = database.getReference().child(user.getUid()).child("Chain");
+        dbReference = database.getReference().child("Chains");
+        userReference = database.getReference().child("Users").child(user.getUid());
         chain = new Chain();
         genreList = new ArrayList<>();
 
@@ -89,6 +99,7 @@ public class SingleGenreActivity extends AppCompatActivity implements OnChainlis
             @Override
             public void onClick(View v) {
                 finish();
+//                refreshChains();
             }
         });
 
@@ -108,6 +119,21 @@ public class SingleGenreActivity extends AppCompatActivity implements OnChainlis
             public void onLongClick(View view, int position) {
             }
         }));
+
+
+        userReference.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                users = dataSnapshot.getValue(Users.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
 
     }
 
@@ -129,9 +155,10 @@ public class SingleGenreActivity extends AppCompatActivity implements OnChainlis
     }
 
 //    public void refreshChains() {
-//
-//        Intent intent = new Intent(SingleGenreActivity.this, GenreActivity.class);
-//        intent.putExtra("refreshChains","refreshChains");
+//        finish();
+//        Intent intent = new Intent(getApplicationContext(), SingleGenreActivity.class);
+//        intent.putExtra(genreTitle, (Serializable) genreList);
+//        intent.putExtra("genre", genreTitle);
 //        startActivity(intent);
 //    }
 
@@ -142,7 +169,7 @@ public class SingleGenreActivity extends AppCompatActivity implements OnChainlis
         View dialogView = inflater.inflate(R.layout.dialog_layout, null);
 
         final EditText title = dialogView.findViewById(R.id.edt_title);
-        final EditText author = dialogView.findViewById(R.id.edt_author);
+        final TextView author = dialogView.findViewById(R.id.edt_author);
         final EditText desc = dialogView.findViewById(R.id.edt_desc);
         final TextView dateCreated = dialogView.findViewById(R.id.edt_date_created);
         final TextView genre = dialogView.findViewById(R.id.edt_genre);
@@ -152,29 +179,27 @@ public class SingleGenreActivity extends AppCompatActivity implements OnChainlis
 
         genre.setText(genreTitle);
         dateCreated.setText(date_today);
+        author.setText(users.getUserDisplayName());
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String titleName = title.getText().toString();
-                String authorName = author.getText().toString();
                 String description = desc.getText().toString();
                 String date = dateCreated.getText().toString();
                 String genreName = genre.getText().toString();
 
                 chain.setChainName(titleName);
-                chain.setChainAuthor(authorName);
+                chain.setChainAuthor(users.getUserDisplayName());
+                chain.setChainAuthorID(users.getUserID());
                 chain.setChainDescription(description);
                 chain.setDateCreated(date);
                 chain.setChainGenre(genreName);
                 Utils.saveDataToFirebase(chain, dbReference);
-
-                //onBackPressed();
+                Utils.increaseUserChainInfo(userReference, users);
                 chainAdapter.notifyDataSetChanged();
                 dialogBuilder.dismiss();
-
                 finish();
-
             }
         });
 

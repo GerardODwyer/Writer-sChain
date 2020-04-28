@@ -65,7 +65,7 @@ public class GenreActivity extends AppCompatActivity {
         user = auth.getCurrentUser();
         setupVariables();
         chain = new Chain();
-        dbReference = database.getReference().child(user.getUid()).child("Chain");
+        dbReference = database.getReference().child("Chains");
         comdeyList = new ArrayList<>();
         horrorList = new ArrayList<>();
         loveList = new ArrayList<>();
