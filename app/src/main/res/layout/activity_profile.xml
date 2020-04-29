@@ -12,9 +12,11 @@
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:text="chain count"
-        android:textSize="30dp"
+        android:layout_marginEnd="16dp"
+        android:text="Chain Count"
+        android:textAlignment="center"
+        android:textColor="@color/color_dark"
+        android:textSize="25sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView13" />
@@ -23,8 +25,9 @@
         android:id="@+id/text_ChainCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="00"
+        android:textAlignment="center"
         android:textSize="30dp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="@+id/textView13"
@@ -35,8 +38,9 @@
         android:id="@+id/text_ChapterCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="00"
+        android:textAlignment="center"
         android:textSize="30dp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="@+id/textView12"
@@ -47,9 +51,12 @@
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Chapter count "
-        android:textSize="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Chapter Count "
+        android:textAlignment="center"
+        android:textColor="@color/color_dark"
+        android:textSize="25sp"
         android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_bookmark" />
@@ -58,47 +65,50 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="24dp"
-        android:text="Username"
-        android:textSize="30dp"
+        android:layout_marginStart="16dp"
+        android:text="Display Name"
+        android:textAlignment="center"
+        android:textColor="@color/color_dark"
+        android:textSize="25sp"
         android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_header" />
+        app:layout_constraintTop_toTopOf="@+id/textView15" />
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="129dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text='from this screen youll find a list of chains these can be viewed as "book covers" of sort these would be short descriptions or prompts that can be used to help create a new world, after this you can read chapters or chains and even hav a go at writing some! remeber in a chain or chapter to keep the theme friendly but otherwise have fun!'
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_ChainCount" />
+        app:layout_constraintTop_toBottomOf="@+id/text_ChainCount"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="username"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="@+id/textView9"
         app:layout_constraintStart_toStartOf="@+id/textView9"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
 
-
     <ImageView
-    android:id="@+id/image_header"
-    android:layout_width="wrap_content"
-    android:layout_height="135dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.0"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:srcCompat="@drawable/banner" />
+        android:id="@+id/image_header"
+        android:layout_width="0dp"
+        android:layout_height="135dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/banner" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -113,11 +123,11 @@
 
     <ImageView
         android:id="@+id/image_bookmark"
-        android:layout_width="0dp"
-        android:layout_height="90dp"
+        android:layout_width="182dp"
+        android:layout_height="122dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView9"
         app:layout_constraintTop_toBottomOf="@+id/image_header"
         app:srcCompat="@drawable/images" />
 
@@ -126,7 +136,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign Out"
-        android:textSize="22sp"
+        android:textAlignment="center"
+        android:textColor="@color/color_dark"
+        android:textSize="25sp"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/image_bookmark"
         app:layout_constraintEnd_toEndOf="@+id/image_bookmark"
         app:layout_constraintStart_toStartOf="@+id/image_bookmark"

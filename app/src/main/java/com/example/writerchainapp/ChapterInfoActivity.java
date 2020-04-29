@@ -66,12 +66,12 @@ public class ChapterInfoActivity extends AppCompatActivity implements ChapterAda
     private FirebaseAuth auth;
     private Chain chain;
     private String chapterID;
-//    private Chapters newChapter;
+    //    private Chapters newChapter;
     private EditText search;
     private Users users;
 
     private String chapterFKID;
-//    private String descTest;
+    //    private String descTest;
     private RecyclerView recyclerView;
     private ChapterAdapter chapterAdapter;
 
@@ -217,10 +217,8 @@ public class ChapterInfoActivity extends AppCompatActivity implements ChapterAda
 
             public void onLongClick(View view, int position) {
                 Chapters chapters = chapterList.get(position);
-                if (users.isUserAdmin()) {
-                    createAdminPopUp(getApplicationContext(), position);
-                } else if (users.getUserID().equals(chapters.getChapterAuthorID())) {
-                    createEditPopUp(getApplicationContext(), position);
+                if (users.getUserID().equals(chapters.getChapterAuthorID()) || users.isUserAdmin()) {
+                    initialPopUp(position);
                 }
             }
         }));
@@ -240,6 +238,40 @@ public class ChapterInfoActivity extends AppCompatActivity implements ChapterAda
         });
 
     }
+
+    private void initialPopUp(final int position) {
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.initial_dialog, null);
+        alertDialog.setView(dialogView);
+        Button button1 = dialogView.findViewById(R.id.buttonEdit);
+        Button button2 = dialogView.findViewById(R.id.buttonDelete);
+        alertDialog.setTitle("What do you want to do")
+                .setMessage("Please select from the following"
+                        + "\n\n"
+                        + "Edit or Delete");
+        alertDialog.setView(dialogView);
+        final AlertDialog dialog1 = alertDialog.create();
+        dialog1.show();
+
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog1.dismiss();
+                createEditPopUp(getApplicationContext(), position);
+            }
+        });
+
+
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog1.dismiss();
+                createAdminPopUp(getApplicationContext(), position);
+            }
+        });
+    }
+
 
     @Override
     protected void onResume() {

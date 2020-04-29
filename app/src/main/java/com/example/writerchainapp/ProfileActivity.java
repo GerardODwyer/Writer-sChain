@@ -2,45 +2,34 @@ package com.example.writerchainapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.writerchainapp.Constructors.Chain;
 import com.example.writerchainapp.Constructors.Users;
 import com.example.writerchainapp.ui.login.LoginActivity;
-import com.example.writerchainapp.utils.Utils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.List;
-
 public class ProfileActivity extends AppCompatActivity {
 
     private FirebaseDatabase database;
     private DatabaseReference dbReference;
-    private List<Chain> genreList;
     private FirebaseUser user;
     private FirebaseAuth auth;
     private TextView chainCount;
     private TextView chapterCount;
-    private DataSnapshot dataSnapshot;
-    private long longChainCount;
-    private String strChainCount;
     private ImageView signout;
     private TextView username;
     private Users users;
+    private int mCounter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +46,25 @@ public class ProfileActivity extends AppCompatActivity {
         dbReference = database.getReference().child("Users").child(user.getUid());
         getChainInfo(dbReference);
 
+        username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCounter++;
+
+                if (mCounter == 6){
+                    mCounter = 0;
+                    if (!users.isUserAdmin()) {
+                        users.setUserAdmin(true);
+                        dbReference.setValue(users);
+                        Toast.makeText(ProfileActivity.this, "User profile set to admin. Enjoy!", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(ProfileActivity.this, "Already an admin user.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+        });
+
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,14 +76,13 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-
     public void getChainInfo(DatabaseReference dbReference) {
 
         dbReference.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Users users = dataSnapshot.getValue(Users.class);
+                users = dataSnapshot.getValue(Users.class);
                 String chainNumber = String.valueOf(users.getUserChainCount());
                 String chapterNumber = String.valueOf(users.getUserChapterCount());
                 chainCount.setText(chainNumber);
