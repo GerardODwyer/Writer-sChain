@@ -30,7 +30,7 @@ public class Help extends AppCompatActivity {
         setContentView(R.layout.activity_help);
 
         question1 = "How to start reading a story?";
-        question2 = "What is a Chain?";
+        question2 = "Rules";
         question3 = "What is right for me?";
         question4 = "How to become an admin user?";
         question5 = "How to join the Discord server?";
@@ -50,7 +50,9 @@ public class Help extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String answer = "Answer 1";
+                String answer = "To read a story simply click genre from the home screen then choose one of the many genres available, there is a wide variety to suit everyone taste.\n" +
+                        "From hear pick a chain or search through existing chains to see your options.\n" +
+                        "Next select chapters as they rise to see what suits you best, follow one chains author or follow a different author each time maybe even make a few chapters of your own.\n";
                 answerQuestion(getApplicationContext(), question1, answer);
             }
         });
@@ -58,7 +60,11 @@ public class Help extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String answer = "Answer 2";
+                String answer = "Before you add content it is important to be aware of and follow the simple rules outlined below otherwise your chapter may be removed. \n" +
+                        "1.\tEnsure your chain is in the correct genre after all you wouldn’t want to find a robot fight in the middle of a romance.\n" +
+                        "2.\tDon’t give real life details, try to refrain from giving details about your personal life such as your name address or even your email.\n" +
+                        "3.\tDon’t spam adding the same chapter or chain multiple times, this will result in a ban and deletion of your account \n" +
+                        "4.\tKeep things clean as you can after all you don’t want to lower a stories overall quality pointlessly.\n";
                 answerQuestion(getApplicationContext(), question2, answer);
             }
         });
@@ -66,7 +72,9 @@ public class Help extends AppCompatActivity {
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String answer = "Answer 3";
+                String answer = "To read a story simply click genre from the home screen then choose one of the many genres available, there is a wide variety to suit everyone taste.\n" +
+                        "From hear pick a chain or search through existing chains to see your options.\n" +
+                        "Next select chapters as they rise to see what suits you best, follow one chains author or follow a different author each time maybe even make a few chapters of your own.\n";
                 answerQuestion(getApplicationContext(), question3, answer);
             }
         });
@@ -74,7 +82,11 @@ public class Help extends AppCompatActivity {
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String answer = "Answer 4";
+                String answer = "Writers’ Chain is an interactive community driven story creation app in which users can create new worlds or develop existing ones made by other users. This tool can be a powerful assistant for writers and readers alike.\n" +
+                        "Please note that Writers’ Chain is at present a free to use app in the beta stage as such it is likely to experience any number of bugs or errors if you find one please contact an admin on discord at;\n" +
+                        "https://discord.gg/F6H2pR\n" +
+                        "or email at \n" +
+                        "gerard.odwyer1@gmail.com\n";
                 answerQuestion(getApplicationContext(), question4, answer);
             }
         });
@@ -82,7 +94,11 @@ public class Help extends AppCompatActivity {
         button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String answer = "Answer 5";
+                String answer = "Writers’ Chain is an interactive community driven story creation app in which users can create new worlds or develop existing ones made by other users. This tool can be a powerful assistant for writers and readers alike.\n" +
+                        "Please note that Writers’ Chain is at present a free to use app in the beta stage as such it is likely to experience any number of bugs or errors if you find one please contact an admin on discord at;\n" +
+                        "https://discord.gg/F6H2pR\n" +
+                        "or email at \n" +
+                        "gerard.odwyer1@gmail.com\n";
                 answerQuestion(getApplicationContext(), question5, answer);
             }
         });

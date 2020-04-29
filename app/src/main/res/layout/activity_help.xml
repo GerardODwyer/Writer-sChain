@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Rules"
+        android:text="Welcome!"
         android:textColor="@color/color_dark"
         android:textSize="25sp"
         android:textStyle="bold|italic"
@@ -81,7 +81,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:text="writers chain is an interactive community driven story creation app in which users can create new worlds or develop existing ones made by other users, this tool can be a powerful assistant for writers and readers alike,"
+        android:text=" new worlds or develop existing ones made by other users, this tool can be a powerful assistant for writers and readers alike,"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
@@ -93,7 +93,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:text="Button"
+        android:text=" rules"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
